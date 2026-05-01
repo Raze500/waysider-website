@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — PDF Signer · Waysider Studio</title>
+  <meta name="description" content="Privacy Policy for PDF Signer by Waysider Studio. What data is collected and how it is used.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Privacy Policy — PDF Signer · Waysider Studio">
+  <meta property="og:description" content="Privacy Policy for PDF Signer by Waysider Studio.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://waysiderstudio.com/privacy/pdf-signer.html">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    [x-cloak] { display: none !important; }
+    body { font-family: 'Inter', sans-serif; }
+    .prose h2 { font-size: 1.25rem; font-weight: 700; color: #fafafa; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .prose h3 { font-size: 1rem; font-weight: 600; color: #e4e4e7; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    .prose p { color: #a1a1aa; line-height: 1.75; margin-bottom: 1rem; }
+    .prose ul { color: #a1a1aa; line-height: 1.75; margin-bottom: 1rem; padding-left: 1.5rem; list-style-type: disc; }
+    .prose li { margin-bottom: 0.375rem; }
+    .prose a { color: #5ed29c; text-decoration: underline; }
+    .prose a:hover { color: #7edcae; }
+    .prose strong { color: #e4e4e7; font-weight: 600; }
+  </style>
+</head>
+<body class="text-zinc-50 antialiased min-h-screen flex flex-col" style="background:#070b0a;">
+
+  <!-- NAV -->
+  <nav x-data="{ open: false }" class="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.07] bg-[#070b0a]/95 backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="/index.html" class="flex items-center gap-3">
+        <svg width="30" height="30" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <line x1="28" y1="112" x2="96" y2="112" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <line x1="96" y1="112" x2="163" y2="56" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <circle cx="163" cy="56" r="10" fill="#5ed29c"/>
+        </svg>
+        <span class="font-semibold text-white tracking-tight">Waysider<span style="color:#5ed29c;">.</span></span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="/apps.html"    class="text-white/50 hover:text-white transition text-sm font-medium">Apps</a>
+        <a href="/about.html"   class="text-white/50 hover:text-white transition text-sm font-medium">About</a>
+        <a href="/contact.html" class="text-white/50 hover:text-white transition text-sm font-medium">Contact</a>
+      </div>
+      <button @click="open = !open" class="md:hidden p-2 text-white/50 hover:text-white rounded-lg transition">
+        <svg x-show="!open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg x-show="open" x-cloak class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div x-show="open" x-cloak
+         x-transition:enter="transition ease-out duration-150"
+         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         class="md:hidden border-t border-white/[0.07] bg-[#070b0a] px-6 py-5 flex flex-col gap-5">
+      <a href="/apps.html"    class="text-white/50 hover:text-white transition text-sm font-medium">Apps</a>
+      <a href="/about.html"   class="text-white/50 hover:text-white transition text-sm font-medium">About</a>
+      <a href="/contact.html" class="text-white/50 hover:text-white transition text-sm font-medium">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <section class="pt-36 pb-10 px-6">
+    <div class="max-w-3xl mx-auto">
+
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-sm mb-6" style="color:rgba(255,255,255,0.3);">
+        <a href="/privacy.html" class="hover:text-white transition">Privacy</a>
+        <span>/</span>
+        <span style="color:rgba(255,255,255,0.6);">PDF Signer</span>
+      </nav>
+
+      <!-- App badge -->
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
+             style="background:rgba(94,210,156,0.08); border:1px solid rgba(94,210,156,0.15);">
+          <svg class="w-7 h-7" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-3xl md:text-4xl font-extrabold">Privacy Policy</h1>
+          <p class="text-white/40 text-sm mt-0.5">PDF Signer · Waysider Studio</p>
+        </div>
+      </div>
+
+      <p class="text-white/30 text-sm">Last updated: May 1, 2026</p>
+    </div>
+  </section>
+
+  <!-- QUICK SUMMARY -->
+  <section class="px-6 pb-8">
+    <div class="max-w-3xl mx-auto">
+      <div class="rounded-2xl p-6"
+           style="background:rgba(94,210,156,0.05); border:1px solid rgba(94,210,156,0.15);">
+        <p class="text-sm font-semibold mb-3" style="color:#5ed29c;">Plain language summary</p>
+        <ul class="space-y-2 text-sm" style="color:rgba(255,255,255,0.6);">
+          <li>✓ &nbsp;PDF Signer processes your documents entirely on your device. Your files are never uploaded anywhere.</li>
+          <li>✓ &nbsp;No account required. No sign-up. Ever.</li>
+          <li>✓ &nbsp;Signing happens 100% offline. No internet connection needed.</li>
+          <li>✓ &nbsp;Your signature is drawn on-screen and embedded in the PDF locally. It is not stored by us.</li>
+          <li>✓ &nbsp;Ads are shown to keep the app free. Google AdMob may collect limited ad-related data.</li>
+          <li>✓ &nbsp;We do not sell your data to anyone.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- POLICY CONTENT -->
+  <section class="pb-24 px-6">
+    <div class="max-w-3xl mx-auto prose">
+
+      <p>
+        This Privacy Policy applies specifically to the <strong>PDF Signer</strong> app developed and published by Waysider Studio ("we", "our", or "us") on Google Play. By using the app, you agree to the terms described in this policy.
+      </p>
+
+      <h2>1. Permissions Used</h2>
+      <p>PDF Signer requests only the permissions required to open, sign, and save PDF files on your device:</p>
+      <ul>
+        <li>
+          <strong>READ_MEDIA_IMAGES / READ_EXTERNAL_STORAGE</strong> — Required to open PDF files you select from your device storage. Files are read locally and never transmitted to any server.
+        </li>
+        <li>
+          <strong>WRITE_EXTERNAL_STORAGE</strong> (Android 9 and below) — Required to save the signed PDF back to your device. On Android 10+, scoped storage is used and this permission is not needed.
+        </li>
+      </ul>
+      <p>
+        The app does not access your contacts, location, camera, microphone, or any other sensitive data. Your signature is captured via touch input directly within the app and is never stored independently — it is embedded into the PDF only when you explicitly tap "Save" or "Export".
+      </p>
+
+      <h2>2. Information We Collect</h2>
+
+      <h3>What we do NOT collect</h3>
+      <ul>
+        <li>We do not require an account and we do not collect your name, email, or any personal identifier.</li>
+        <li>We do not read the content of your PDF documents beyond what is necessary to render them on screen for signing.</li>
+        <li>Your PDF files, their content, and your signature are never uploaded, transmitted, or shared with Waysider Studio or any third party.</li>
+        <li>We do not store a copy of your signature.</li>
+      </ul>
+
+      <h3>What Google AdMob may collect</h3>
+      <p>
+        PDF Signer is free and supported by ads served by Google AdMob (Google LLC). AdMob may automatically collect the following data to serve relevant ads:
+      </p>
+      <ul>
+        <li><strong>Advertising ID</strong> — a resettable, non-personal identifier assigned by Android to your device.</li>
+        <li><strong>IP address</strong> — used to approximate your general location (country/region) for ad targeting. Not stored by us.</li>
+        <li><strong>Device information</strong> — device model, OS version, language, and screen size.</li>
+        <li><strong>Ad interactions</strong> — whether you viewed or tapped an ad.</li>
+      </ul>
+      <p>
+        This data is collected and processed directly by Google LLC under their own Privacy Policy. Waysider Studio does not receive, store, or have access to this data.
+      </p>
+
+      <h2>3. How We Use Information</h2>
+      <p>
+        We do not directly collect personal information, so we have nothing to use or process. The only data-related activity in this app is AdMob's ad serving, described above, which is governed by Google's policies.
+      </p>
+
+      <h2>4. Data Sharing</h2>
+      <p>
+        We do not sell, trade, or share any personal data with third parties. The only third party involved is Google AdMob for ad delivery. See their policy at <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.
+      </p>
+
+      <h2>5. Internet Access</h2>
+      <p>
+        PDF Signer requires internet access <strong>only</strong> to load ads via AdMob. All PDF processing — opening, signing, and saving — is fully offline and requires no internet connection. Your documents are never sent to any external server under any circumstance.
+      </p>
+
+      <h2>6. Sensitive Document Handling</h2>
+      <p>
+        We understand that PDFs often contain sensitive information — contracts, legal documents, medical forms, financial records. PDF Signer is designed with this in mind:
+      </p>
+      <ul>
+        <li>Documents are opened directly from your local storage using Android's standard file picker.</li>
+        <li>All rendering and signature embedding happens in memory on your device.</li>
+        <li>The signed output is written back to your device's storage only when you explicitly save it.</li>
+        <li>The app does not keep any cache of your documents after you close them.</li>
+      </ul>
+
+      <h2>7. Advertising Choices</h2>
+      <p>You can limit ad tracking at any time:</p>
+      <ul>
+        <li>On Android 12 and below: <strong>Settings → Google → Ads → Opt out of Ads Personalization</strong></li>
+        <li>On Android 13+: <strong>Settings → Privacy → Ads → Delete advertising ID</strong></li>
+        <li>Manage preferences at <a href="https://adssettings.google.com" target="_blank" rel="noopener">adssettings.google.com</a></li>
+      </ul>
+      <p>
+        Opting out means you will still see ads, but they will not be personalized based on your interests.
+      </p>
+
+      <h2>8. Data Retention</h2>
+      <p>
+        We do not store any personal data or document data. Ad-related data collected by AdMob is subject to <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's retention policies</a>.
+      </p>
+
+      <h2>9. Children's Privacy</h2>
+      <p>
+        PDF Signer is not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has provided personal data through this app, please contact us and we will take appropriate steps immediately.
+      </p>
+
+      <h2>10. Your Rights (GDPR / CCPA)</h2>
+      <p>Depending on your location, you may have the right to:</p>
+      <ul>
+        <li>Access personal data held about you</li>
+        <li>Request deletion of your personal data</li>
+        <li>Object to or restrict processing</li>
+        <li>Data portability</li>
+      </ul>
+      <p>
+        Since we do not directly collect personal data, most rights apply to data held by Google AdMob. For Google-related requests, visit <a href="https://myaccount.google.com" target="_blank" rel="noopener">myaccount.google.com</a>. For any other concern, contact us directly.
+      </p>
+
+      <h2>11. Security</h2>
+      <p>
+        Because PDF Signer processes all documents locally and never transmits your files to any server, the security of your documents depends on your device's own security settings (screen lock, encryption). We take reasonable measures to ensure the app itself is free from vulnerabilities that could expose your files.
+      </p>
+
+      <h2>12. Changes to This Policy</h2>
+      <p>
+        We may update this policy when the app changes (e.g., new permissions or new features). The "Last updated" date at the top of this page will always reflect the current version. Continued use of the app after changes constitutes acceptance of the updated policy.
+      </p>
+
+      <h2>13. Contact</h2>
+      <p>Questions or concerns about this Privacy Policy?</p>
+      <ul>
+        <li>Email: <a href="mailto:thewaysiders03@gmail.com">thewaysiders03@gmail.com</a></li>
+        <li>Website: <a href="https://waysiderstudio.com/contact.html">waysiderstudio.com/contact</a></li>
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- OTHER APPS -->
+  <section class="px-6 pb-16">
+    <div class="max-w-3xl mx-auto">
+      <div class="rounded-2xl p-6" style="border:1px solid rgba(255,255,255,0.07);">
+        <p class="text-sm font-semibold text-white mb-3">Privacy policies for other apps</p>
+        <ul class="space-y-2 text-sm" style="color:rgba(255,255,255,0.4);">
+          <li>
+            <a href="/privacy/audio-player.html" class="hover:text-white transition" style="color:#5ed29c;">Audio Player</a>
+          </li>
+          <li>
+            <a href="/privacy.html" class="hover:text-white transition">General Privacy Policy (all apps)</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-12 px-6 mt-auto" style="border-top:1px solid rgba(255,255,255,0.06);">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2.5">
+        <svg width="24" height="24" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <line x1="28" y1="112" x2="96" y2="112" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <line x1="96" y1="112" x2="163" y2="56" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <circle cx="163" cy="56" r="10" fill="#5ed29c"/>
+        </svg>
+        <span class="font-semibold text-white/30">Waysider Studio</span>
+      </div>
+      <nav class="flex flex-wrap justify-center gap-6 text-sm text-white/30">
+        <a href="/apps.html"    class="hover:text-white transition">Apps</a>
+        <a href="/about.html"   class="hover:text-white transition">About</a>
+        <a href="/contact.html" class="hover:text-white transition">Contact</a>
+        <a href="/privacy.html" class="hover:text-white transition">Privacy Policy</a>
+      </nav>
+      <p class="text-sm text-white/20">© 2026 Waysider Studio. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

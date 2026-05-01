@@ -1,0 +1,16 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" rx="44" fill="#070b0a"/>
+
+  <!-- Path mark: el camino lateral -->
+  <!-- Línea horizontal -->
+  <line x1="34" y1="132" x2="96" y2="132"
+        stroke="#5ed29c" stroke-width="10" stroke-linecap="round"/>
+  <!-- Bifurcación diagonal -->
+  <line x1="90" y1="132" x2="156" y2="66"
+        stroke="#5ed29c" stroke-width="10" stroke-linecap="round"/>
+  <!-- Punto de inicio (sutil) -->
+  <circle cx="34" cy="132" r="5" fill="#5ed29c" opacity="0.25"/>
+  <!-- Punto de destino (énfasis) -->
+  <circle cx="156" cy="66" r="13" fill="#5ed29c"/>
+</svg>

@@ -1,0 +1,134 @@
+/* ============================================================
+   Waysider Design Tokens — v1.0
+   Dark-first. Paleta: Indigo (primary) + Lima (accent) + Zinc (neutral)
+   ============================================================ */
+
+:root {
+  /* --- PRIMARY — Indigo --- */
+  --color-primary-50:  #eef2ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c7d2fe;
+  --color-primary-300: #a5b4fc;
+  --color-primary-400: #818cf8;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #312e81;
+
+  /* --- ACCENT — Lima --- */
+  --color-accent-300: #bef264;
+  --color-accent-400: #a3e635;
+  --color-accent-500: #84cc16;
+  --color-accent-600: #65a30d;
+
+  /* --- NEUTRAL — Zinc --- */
+  --color-neutral-0:   #ffffff;
+  --color-neutral-50:  #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #52525b;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
+
+  /* --- ESTADO --- */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error:   #ef4444;
+  --color-info:    #3b82f6;
+
+  /* --- SEMÁNTICOS (dark por defecto) --- */
+  --color-bg:           var(--color-neutral-950);
+  --color-surface:      var(--color-neutral-900);
+  --color-surface-2:    var(--color-neutral-800);
+  --color-border:       var(--color-neutral-700);
+  --color-border-subtle:var(--color-neutral-800);
+  --color-text:         var(--color-neutral-0);
+  --color-text-muted:   var(--color-neutral-400);
+  --color-text-subtle:  var(--color-neutral-600);
+
+  /* --- TIPOGRAFÍA --- */
+  --font-display: "Syne", sans-serif;
+  --font-body:    "Inter", sans-serif;
+  --font-mono:    "JetBrains Mono", monospace;
+
+  --text-xs:   0.64rem;
+  --text-sm:   0.8rem;
+  --text-base: 1rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.563rem;
+  --text-2xl:  1.953rem;
+  --text-3xl:  2.441rem;
+  --text-4xl:  3.052rem;
+  --text-5xl:  3.815rem;
+
+  --leading-tight:  1.1;
+  --leading-snug:   1.3;
+  --leading-normal: 1.5;
+  --leading-relaxed:1.7;
+
+  --tracking-tight:  -0.04em;
+  --tracking-snug:   -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide:   0.04em;
+  --tracking-widest: 0.12em;
+
+  /* --- ESPACIADO (escala 4px) --- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* --- BORDER RADIUS --- */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* --- SOMBRAS --- */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md:  0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg:  0 10px 30px rgba(0,0,0,0.5);
+  --shadow-glow-primary: 0 0 24px rgba(99,102,241,0.3);
+  --shadow-glow-accent:  0 0 24px rgba(163,230,53,0.2);
+
+  /* --- TRANSICIONES --- */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms ease;
+
+  /* --- Z-INDEX --- */
+  --z-below:   -1;
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 100;
+  --z-modal:   200;
+  --z-toast:   300;
+}
+
+/* ============================================================
+   Light theme override (si en algún momento se necesita)
+   ============================================================ */
+[data-theme="light"] {
+  --color-bg:            var(--color-neutral-50);
+  --color-surface:       var(--color-neutral-0);
+  --color-surface-2:     var(--color-neutral-100);
+  --color-border:        var(--color-neutral-200);
+  --color-border-subtle: var(--color-neutral-100);
+  --color-text:          var(--color-neutral-950);
+  --color-text-muted:    var(--color-neutral-500);
+  --color-text-subtle:   var(--color-neutral-400);
+}

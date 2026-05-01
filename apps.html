@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apps - Waysider Studio</title>
+  <meta name="description" content="Android apps built by Waysider Studio. Simple, practical, and free to download.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Apps - Waysider Studio">
+  <meta property="og:description" content="Android apps built by Waysider Studio. Simple, practical, and free.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://waysiderstudio.com/apps.html">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Apps - Waysider Studio">
+  <meta name="twitter:description" content="Android apps built by Waysider Studio.">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    [x-cloak] { display: none !important; }
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-50 antialiased min-h-screen flex flex-col">
+
+  <!-- NAV -->
+  <nav x-data="{ open: false }" class="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800/80 bg-zinc-950/95 backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <svg width="30" height="30" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <line x1="28" y1="112" x2="96" y2="112" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <line x1="96" y1="112" x2="163" y2="56" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <circle cx="163" cy="56" r="10" fill="#5ed29c"/>
+        </svg>
+        <span class="font-semibold text-white tracking-tight">Waysider<span style="color:#5ed29c;">.</span></span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="apps.html" class="text-zinc-50 text-sm font-medium">Apps</a>
+        <a href="about.html" class="text-zinc-400 hover:text-zinc-50 transition text-sm font-medium">About</a>
+        <a href="contact.html" class="text-zinc-400 hover:text-zinc-50 transition text-sm font-medium">Contact</a>
+      </div>
+      <button @click="open = !open" class="md:hidden p-2 text-zinc-400 hover:text-zinc-50 rounded-lg transition">
+        <svg x-show="!open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg x-show="open" x-cloak class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="md:hidden border-t border-zinc-800 bg-zinc-950 px-6 py-5 flex flex-col gap-5">
+      <a href="apps.html" class="text-zinc-50 text-sm font-medium">Apps</a>
+      <a href="about.html" class="text-zinc-400 hover:text-zinc-50 transition text-sm font-medium">About</a>
+      <a href="contact.html" class="text-zinc-400 hover:text-zinc-50 transition text-sm font-medium">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <section class="pt-36 pb-12 px-6">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Our Apps</h1>
+      <p class="text-zinc-400 text-lg">Practical Android apps for everyday use. Free to download, no account required.</p>
+    </div>
+  </section>
+
+  <!-- APPS LIST -->
+  <section class="pb-24 px-6">
+    <div class="max-w-4xl mx-auto flex flex-col gap-8">
+
+      <!-- Audio Player -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+        <div class="p-8 md:p-10">
+          <div class="flex flex-col md:flex-row md:items-start gap-6">
+            <div class="w-16 h-16 bg-violet-950/60 border border-violet-800/40 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-8 h-8 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <h2 class="text-2xl font-bold">Audio Player</h2>
+                <span class="text-xs bg-amber-950/60 border border-amber-800/50 text-amber-400 px-2.5 py-1 rounded-full font-medium">Coming soon</span>
+              </div>
+              <p class="text-zinc-400 text-lg leading-relaxed mb-6">
+                A clean, distraction-free music player for your local library. No streaming service, no subscription, no cloud. Just your music, playing exactly how you want it.
+              </p>
+
+              <!-- Features -->
+              <div class="grid sm:grid-cols-2 gap-3 mb-8">
+                <div class="flex items-start gap-3">
+                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <span class="text-zinc-400 text-sm">Plays local audio files (MP3, FLAC, WAV, OGG)</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <span class="text-zinc-400 text-sm">Works completely offline</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <span class="text-zinc-400 text-sm">Clean interface, no clutter</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <span class="text-zinc-400 text-sm">Free with optional ads</span>
+                </div>
+              </div>
+
+              <button disabled class="flex items-center gap-2 border border-zinc-700 text-zinc-500 px-6 py-3 rounded-xl text-sm font-medium cursor-not-allowed">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3.18 23.76c.35.2.74.24 1.1.14l12.76-7.37-3.15-3.15L3.18 23.76zm17.69-10.29c.31-.26.63-.7.63-1.47s-.32-1.21-.63-1.47l-2.36-1.36-3.35 3.35 3.35 3.35 2.36-1.4zM4.28.1C3.92 0 3.53.04 3.18.24L13.69 10.75l3.15-3.15L4.28.1zM2.2 1.4C2.08 1.67 2 1.98 2 2.34v19.32c0 .36.08.67.2.94l.08.08 10.82-10.82v-.26L2.28 1.32 2.2 1.4z"/>
+                </svg>
+                Available soon on Google Play
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PDF Signer -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+        <div class="p-8 md:p-10">
+          <div class="flex flex-col md:flex-row md:items-start gap-6">
+            <div class="w-16 h-16 bg-violet-950/60 border border-violet-800/40 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-8 h-8 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <h2 class="text-2xl font-bold">PDF Signer</h2>
+                <span class="text-xs bg-zinc-800/80 border border-zinc-700 text-zinc-500 px-2.5 py-1 rounded-full font-medium">In development</span>
+              </div>
+              <p class="text-zinc-400 text-lg leading-relaxed mb-6">
+                Sign PDF documents directly from your Android phone. Fast, completely offline, and private - your documents never leave your device.
+              </p>
+
+              <!-- Features -->
+              <div class="grid sm:grid-cols-2 gap-3 mb-8">
+                <div class="flex items-start gap-3">
+                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <span class="text-zinc-400 text-sm">Draw your signature on screen</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <span class="text-zinc-400 text-sm">100% offline - no uploads</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <span class="text-zinc-400 text-sm">Place signature anywhere in the PDF</span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <span class="text-zinc-400 text-sm">Free with optional ads</span>
+                </div>
+              </div>
+
+              <button disabled class="flex items-center gap-2 border border-zinc-700 text-zinc-500 px-6 py-3 rounded-xl text-sm font-medium cursor-not-allowed">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3.18 23.76c.35.2.74.24 1.1.14l12.76-7.37-3.15-3.15L3.18 23.76zm17.69-10.29c.31-.26.63-.7.63-1.47s-.32-1.21-.63-1.47l-2.36-1.36-3.35 3.35 3.35 3.35 2.36-1.4zM4.28.1C3.92 0 3.53.04 3.18.24L13.69 10.75l3.15-3.15L4.28.1zM2.2 1.4C2.08 1.67 2 1.98 2 2.34v19.32c0 .36.08.67.2.94l.08.08 10.82-10.82v-.26L2.28 1.32 2.2 1.4z"/>
+                </svg>
+                Available soon on Google Play
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-zinc-800 py-12 px-6 mt-auto">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2.5">
+        <svg width="24" height="24" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <line x1="28" y1="112" x2="96" y2="112" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <line x1="96" y1="112" x2="163" y2="56" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <circle cx="163" cy="56" r="10" fill="#5ed29c"/>
+        </svg>
+        <span class="font-semibold text-zinc-500">Waysider Studio</span>
+      </div>
+      <nav class="flex flex-wrap justify-center gap-6 text-sm text-zinc-500">
+        <a href="apps.html" class="hover:text-zinc-300 transition">Apps</a>
+        <a href="about.html" class="hover:text-zinc-300 transition">About</a>
+        <a href="contact.html" class="hover:text-zinc-300 transition">Contact</a>
+        <a href="privacy.html" class="hover:text-zinc-300 transition">Privacy Policy</a>
+      </nav>
+      <p class="text-sm text-zinc-600">© 2026 Waysider Studio. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

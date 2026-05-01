@@ -1,0 +1,17 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" rx="44" fill="#070b0a"/>
+
+  <!-- Focus mark: arco 270° + crosshair + punto central -->
+  <!-- Arco (abierto en esquina inferior-derecha) -->
+  <path d="M100 34 A66 66 0 1 1 166 100"
+        stroke="#5ed29c" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- Cruz horizontal -->
+  <line x1="72" y1="100" x2="128" y2="100"
+        stroke="#5ed29c" stroke-width="9" stroke-linecap="round"/>
+  <!-- Cruz vertical -->
+  <line x1="100" y1="72" x2="100" y2="128"
+        stroke="#5ed29c" stroke-width="9" stroke-linecap="round"/>
+  <!-- Punto central -->
+  <circle cx="100" cy="100" r="10" fill="#5ed29c"/>
+</svg>

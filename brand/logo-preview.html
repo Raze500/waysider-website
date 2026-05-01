@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waysider — Logo Options</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #070b0a;
+      font-family: "Inter", sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      gap: 64px;
+    }
+
+    h1 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      max-width: 760px;
+      width: 100%;
+    }
+
+    .option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .option img {
+      width: 160px;
+      height: 160px;
+    }
+
+    .label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .name {
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2px;
+      text-align: center;
+    }
+
+    .desc {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* Wordmark preview row */
+    .wordmarks {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+      max-width: 760px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 48px;
+    }
+
+    .wordmark-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 24px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .wordmark-row img {
+      width: 44px;
+      height: 44px;
+    }
+
+    .wordmark-row span {
+      font-size: 22px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .wordmark-row .dot { color: #5ed29c; }
+
+    .wordmark-label {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* On white bg */
+    .on-white {
+      background: #f8f8f8;
+    }
+    .on-white img { filter: none; }
+
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Waysider — Logo Options</h1>
+
+  <!-- Mark options -->
+  <div class="grid">
+
+    <div class="option">
+      <img src="logo-a.svg" alt="Logo A" />
+      <div>
+        <p class="name">Opción A</p>
+        <p class="label">El camino lateral</p>
+        <p class="desc">Ruta con bifurcación.<br/>Directo, geométrico.</p>
+      </div>
+    </div>
+
+    <div class="option">
+      <img src="logo-b.svg" alt="Logo B" />
+      <div>
+        <p class="name">Opción B</p>
+        <p class="label">El punto enfocado</p>
+        <p class="desc">Arco + crosshair.<br/>Preciso, versátil.</p>
+      </div>
+    </div>
+
+    <div class="option">
+      <img src="logo-c.svg" alt="Logo C" />
+      <div>
+        <p class="name">Opción C</p>
+        <p class="label">La letra viva</p>
+        <p class="desc">W geométrica.<br/>Simple, escalable.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Wordmark previews -->
+  <div class="wordmarks">
+    <p class="label" style="margin-bottom:8px;">Wordmark preview (como quedaría en el navbar)</p>
+
+    <div class="wordmark-row">
+      <img src="logo-a.svg" alt="A" />
+      <span>Waysider<span class="dot">.</span></span>
+      <span class="wordmark-label">Opción A</span>
+    </div>
+
+    <div class="wordmark-row">
+      <img src="logo-b.svg" alt="B" />
+      <span>Waysider<span class="dot">.</span></span>
+      <span class="wordmark-label">Opción B</span>
+    </div>
+
+    <div class="wordmark-row">
+      <img src="logo-c.svg" alt="C" />
+      <span>Waysider<span class="dot">.</span></span>
+      <span class="wordmark-label">Opción C</span>
+    </div>
+
+  </div>
+
+</body>
+</html>

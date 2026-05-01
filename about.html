@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Waysider Studio</title>
+  <meta name="description" content="Waysider Studio is an independent Android app developer focused on practical, everyday tools.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="About - Waysider Studio">
+  <meta property="og:description" content="Independent Android app developer focused on practical, everyday tools.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://waysiderstudio.com/about.html">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About - Waysider Studio">
+  <meta name="twitter:description" content="Independent Android app developer.">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    [x-cloak] { display: none !important; }
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-50 antialiased min-h-screen flex flex-col">
+
+  <!-- NAV -->
+  <nav x-data="{ open: false }" class="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800/80 bg-zinc-950/95 backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <svg width="30" height="30" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <line x1="28" y1="112" x2="96" y2="112" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <line x1="96" y1="112" x2="163" y2="56" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <circle cx="163" cy="56" r="10" fill="#5ed29c"/>
+        </svg>
+        <span class="font-semibold text-white tracking-tight">Waysider<span style="color:#5ed29c;">.</span></span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="apps.html" class="text-zinc-400 hover:text-zinc-50 transition text-sm font-medium">Apps</a>
+        <a href="about.html" class="text-zinc-50 text-sm font-medium">About</a>
+        <a href="contact.html" class="text-zinc-400 hover:text-zinc-50 transition text-sm font-medium">Contact</a>
+      </div>
+      <button @click="open = !open" class="md:hidden p-2 text-zinc-400 hover:text-zinc-50 rounded-lg transition">
+        <svg x-show="!open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg x-show="open" x-cloak class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="md:hidden border-t border-zinc-800 bg-zinc-950 px-6 py-5 flex flex-col gap-5">
+      <a href="apps.html" class="text-zinc-400 hover:text-zinc-50 transition text-sm font-medium">Apps</a>
+      <a href="about.html" class="text-zinc-50 text-sm font-medium">About</a>
+      <a href="contact.html" class="text-zinc-400 hover:text-zinc-50 transition text-sm font-medium">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <section class="pt-36 pb-12 px-6">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">About the Studio</h1>
+      <p class="text-zinc-400 text-lg">One developer. A clear focus. Apps that just work.</p>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <section class="pb-24 px-6">
+    <div class="max-w-3xl mx-auto flex flex-col gap-12">
+
+      <!-- Who -->
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-violet-950/60 border border-violet-800/40 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+          </div>
+          <h2 class="text-xl font-bold">Who we are</h2>
+        </div>
+        <div class="space-y-4 text-zinc-400 leading-relaxed text-lg">
+          <p>
+            Waysider Studio is Graham - a solo independent developer based in [your location]. I build Android apps for everyday use, focused on keeping things simple and actually useful.
+          </p>
+          <p>
+            No venture capital, no team of 50, no roadmap driven by investor pressure. Just someone who enjoys building things that work well and solving real problems.
+          </p>
+        </div>
+      </div>
+
+      <div class="border-t border-zinc-800"></div>
+
+      <!-- Why -->
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-violet-950/60 border border-violet-800/40 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+          </div>
+          <h2 class="text-xl font-bold">Why independent?</h2>
+        </div>
+        <div class="space-y-4 text-zinc-400 leading-relaxed text-lg">
+          <p>
+            Most apps today are bloated, require accounts, push notifications you do not want, and collect data you never agreed to share. I wanted to build the opposite.
+          </p>
+          <p>
+            Waysider Studio apps are free to use. They work offline where possible. They do not require you to sign up for anything. If they include ads, it is to keep the lights on - not to fund a Series B.
+          </p>
+        </div>
+      </div>
+
+      <div class="border-t border-zinc-800"></div>
+
+      <!-- How we build -->
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-violet-950/60 border border-violet-800/40 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+          </div>
+          <h2 class="text-xl font-bold">How we build</h2>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+            <h3 class="font-semibold mb-2">Simple first</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">Every feature has to earn its place. If it adds complexity without clear value, it does not ship.</p>
+          </div>
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+            <h3 class="font-semibold mb-2">Privacy by default</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">Offline-first wherever possible. No accounts. No tracking beyond what ads strictly require.</p>
+          </div>
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+            <h3 class="font-semibold mb-2">Free to use</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">Apps are free with optional ads. No paywalls that block core functionality.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-zinc-800"></div>
+
+      <!-- Contact CTA -->
+      <div class="text-center">
+        <h2 class="text-2xl font-bold mb-3">Have a question or idea?</h2>
+        <p class="text-zinc-400 mb-6">Always happy to hear from users and fellow developers.</p>
+        <a href="contact.html" class="bg-[#5ed29c] hover:brightness-110 text-[#070b0a] px-8 py-3.5 rounded-xl font-bold transition">
+          Get in touch
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-zinc-800 py-12 px-6 mt-auto">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2.5">
+        <svg width="24" height="24" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <line x1="28" y1="112" x2="96" y2="112" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <line x1="96" y1="112" x2="163" y2="56" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+          <circle cx="163" cy="56" r="10" fill="#5ed29c"/>
+        </svg>
+        <span class="font-semibold text-zinc-500">Waysider Studio</span>
+      </div>
+      <nav class="flex flex-wrap justify-center gap-6 text-sm text-zinc-500">
+        <a href="apps.html" class="hover:text-zinc-300 transition">Apps</a>
+        <a href="about.html" class="hover:text-zinc-300 transition">About</a>
+        <a href="contact.html" class="hover:text-zinc-300 transition">Contact</a>
+        <a href="privacy.html" class="hover:text-zinc-300 transition">Privacy Policy</a>
+      </nav>
+      <p class="text-sm text-zinc-600">© 2026 Waysider Studio. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
