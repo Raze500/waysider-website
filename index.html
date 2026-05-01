@@ -1,61 +1,45 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Waysider — Apps sin rodeos.</title>
-  <meta name="description" content="Herramientas Android para la vida cotidiana. Simples, bonitas, y hacen lo que tienen que hacer." />
-  <meta property="og:title" content="Waysider — Apps sin rodeos." />
-  <meta property="og:description" content="Herramientas Android para la vida cotidiana." />
+  <title>Waysider Studio</title>
+  <meta name="description" content="Independent developer building apps and projects for everyday use." />
+  <meta property="og:title" content="Waysider Studio" />
+  <meta property="og:description" content="Independent developer building apps and projects for everyday use." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://waysiderstudio.com" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-  <!-- Fonts: Inter + Plus Jakarta Sans + Instrument Serif -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Instrument+Serif:ital@1&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet" />
 
-  <!-- HLS.js -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
-
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            inter:   ["Inter",            "sans-serif"],
-            jakarta: ["Plus Jakarta Sans","sans-serif"],
+            inter:   ["Inter", "sans-serif"],
+            jakarta: ["Plus Jakarta Sans", "sans-serif"],
             serif:   ["Instrument Serif", "serif"],
           },
           keyframes: {
-            "fade-up": {
-              "0%":   { opacity:"0", transform:"translateY(20px)", filter:"blur(4px)" },
-              "100%": { opacity:"1", transform:"translateY(0)",     filter:"blur(0)"  },
-            },
-            "fade-in": {
-              "0%":   { opacity:"0" },
-              "100%": { opacity:"1" },
-            },
-            float: {
-              "0%,100%": { transform:"translateY(0)" },
-              "50%":     { transform:"translateY(-14px)" },
-            },
-            marquee: {
-              "0%":   { transform:"translateX(0)" },
-              "100%": { transform:"translateX(-50%)" },
-            },
+            "fade-up": { "0%": { opacity:"0", transform:"translateY(20px)", filter:"blur(4px)" }, "100%": { opacity:"1", transform:"translateY(0)", filter:"blur(0)" } },
+            "fade-in": { "0%": { opacity:"0" }, "100%": { opacity:"1" } },
+            float:     { "0%,100%": { transform:"translateY(0)" }, "50%": { transform:"translateY(-14px)" } },
+            marquee:   { "0%": { transform:"translateX(0)" }, "100%": { transform:"translateX(-50%)" } },
           },
           animation: {
-            "fade-up":  "fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards",
-            "fade-in":  "fade-in 0.5s ease-out forwards",
-            "float":    "float 6s ease-in-out infinite",
-            marquee:    "marquee 30s linear infinite",
+            "fade-up": "fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards",
+            "fade-in": "fade-in 0.5s ease-out forwards",
+            "float":   "float 6s ease-in-out infinite",
+            marquee:   "marquee 30s linear infinite",
           },
         },
       },
@@ -63,196 +47,75 @@
   </script>
 
   <style>
-    /* ── Base ── */
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: "Inter", sans-serif;
-      background: #070b0a;
-      color: #fff;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    /* ── Grain ── */
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: 0.02; pointer-events: none; z-index: 9999;
-    }
-
-    /* ── Liquid Glass card ── */
-    .glass-card {
-      background: rgba(255,255,255,0.01);
-      background-blend-mode: luminosity;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
-      position: relative;
-    }
-    .glass-card::before {
-      content: '';
-      position: absolute; inset: 0;
-      padding: 1.4px;
-      border-radius: inherit;
-      background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 100%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-    }
-
-    /* ── Navbar ── */
-    #navbar {
-      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), background 0.3s ease;
-    }
-    #navbar.scrolled {
-      background: rgba(7,11,10,0.9);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    #navbar.nav-hidden { transform: translateY(-100%); }
-
-    /* ── Mobile menu ── */
-    #mobile-menu {
-      transform: translateX(100%);
-      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
-    }
-    #mobile-menu.open { transform: translateX(0); }
-    #mobile-backdrop {
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.25s ease;
-    }
-    #mobile-backdrop.open { opacity: 1; pointer-events: auto; }
-
-    /* ── Scroll reveal ── */
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition:
-        opacity  0.75s cubic-bezier(0.16,1,0.3,1),
-        transform 0.75s cubic-bezier(0.16,1,0.3,1);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .rg .reveal:nth-child(1) { transition-delay:   0ms; }
-    .rg .reveal:nth-child(2) { transition-delay: 110ms; }
-    .rg .reveal:nth-child(3) { transition-delay: 220ms; }
-    .rg .reveal:nth-child(4) { transition-delay: 330ms; }
-    .rg .reveal:nth-child(5) { transition-delay: 440ms; }
-    .rg .reveal:nth-child(6) { transition-delay: 550ms; }
-
-    /* ── Cards ── */
-    .card {
-      background: rgba(255,255,255,0.025);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1);
-    }
-    .card:hover { border-color: rgba(94,210,156,0.3); transform: translateY(-4px); }
-    .card-inner {
-      background: rgba(7,11,10,0.6);
-      border-radius: 14px;
-      box-shadow: inset 0 1px 1px rgba(255,255,255,0.03);
-    }
-
-    /* ── Trailing icon button ── */
-    .btn-trail .ti { transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); }
-    .btn-trail:hover .ti { transform: translateX(3px); }
-
-    /* ── Marquee ── */
-    .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
-
-    /* ── Nav link hover ── */
-    .nav-link { position: relative; }
-    .nav-link::after {
-      content: ''; position: absolute;
-      bottom: -2px; left: 0; width: 100%; height: 1px;
-      background: #5ed29c;
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
-    }
-    .nav-link:hover { color: #5ed29c; }
-    .nav-link:hover::after { transform: scaleX(1); }
+    body { font-family:"Inter",sans-serif; background:#070b0a; color:#fff; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+    body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity:0.02; pointer-events:none; z-index:9999; }
+    .glass-card { background:rgba(255,255,255,0.01); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); box-shadow:inset 0 1px 1px rgba(255,255,255,0.1); position:relative; }
+    .glass-card::before { content:''; position:absolute; inset:0; padding:1.4px; border-radius:inherit; background:linear-gradient(180deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.04) 100%); -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; }
+    #navbar { transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),background 0.3s ease; }
+    #navbar.scrolled { background:rgba(7,11,10,0.9); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,0.07); }
+    #navbar.nav-hidden { transform:translateY(-100%); }
+    #mobile-menu { transform:translateX(100%); transition:transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+    #mobile-menu.open { transform:translateX(0); }
+    #mobile-backdrop { opacity:0; pointer-events:none; transition:opacity 0.25s ease; }
+    #mobile-backdrop.open { opacity:1; pointer-events:auto; }
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.75s cubic-bezier(0.16,1,0.3,1),transform 0.75s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .rg .reveal:nth-child(1){transition-delay:0ms} .rg .reveal:nth-child(2){transition-delay:110ms} .rg .reveal:nth-child(3){transition-delay:220ms} .rg .reveal:nth-child(4){transition-delay:330ms} .rg .reveal:nth-child(5){transition-delay:440ms} .rg .reveal:nth-child(6){transition-delay:550ms}
+    .card { background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.08); border-radius:20px; transition:border-color 0.3s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .card:hover { border-color:rgba(94,210,156,0.3); transform:translateY(-4px); }
+    .card-inner { background:rgba(7,11,10,0.6); border-radius:14px; box-shadow:inset 0 1px 1px rgba(255,255,255,0.03); }
+    .btn-trail .ti { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .btn-trail:hover .ti { transform:translateX(3px); }
+    .marquee-wrap:hover .marquee-track { animation-play-state:paused; }
+    .nav-link { position:relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:100%; height:1px; background:#5ed29c; transform:scaleX(0); transform-origin:left; transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .nav-link:hover { color:#5ed29c; }
+    .nav-link:hover::after { transform:scaleX(1); }
   </style>
 </head>
 
 <body>
 
-  <!-- ══ Mobile backdrop ══ -->
-  <div id="mobile-backdrop"
-       class="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden"></div>
+  <!-- Mobile backdrop -->
+  <div id="mobile-backdrop" class="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden"></div>
 
-  <!-- ══ Mobile menu ══ -->
-  <div id="mobile-menu"
-       class="fixed top-0 right-0 bottom-0 z-50 w-72 md:hidden
-              flex flex-col px-8 pt-24 pb-10 gap-8"
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="fixed top-0 right-0 bottom-0 z-50 w-72 md:hidden flex flex-col px-8 pt-24 pb-10 gap-8"
        style="background:#070b0a; border-left:1px solid rgba(255,255,255,0.07);">
-
-    <button id="menu-close"
-            class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center
-                   rounded-lg text-white/50 hover:text-white transition-colors"
-            aria-label="Cerrar menú">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
+    <button id="menu-close" class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-lg text-white/50 hover:text-white transition-colors" aria-label="Close menu">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
     </button>
-
     <nav class="flex flex-col gap-6">
-      <a href="#apps"       class="mobile-link nav-link text-base text-white/60 uppercase tracking-widest transition-colors">Apps</a>
-      <a href="#about"      class="mobile-link nav-link text-base text-white/60 uppercase tracking-widest transition-colors">El Dev</a>
-      <a href="#features"   class="mobile-link nav-link text-base text-white/60 uppercase tracking-widest transition-colors">Filosofía</a>
-      <a href="contact.html" class="mobile-link nav-link text-base text-white/60 uppercase tracking-widest transition-colors">Contacto</a>
+      <a href="work.html"    class="mobile-link nav-link text-base text-white/60 uppercase tracking-widest transition-colors" data-i18n="nav-work">Work</a>
+      <a href="#apps"        class="mobile-link nav-link text-base text-white/60 uppercase tracking-widest transition-colors" data-i18n="nav-apps">Apps</a>
+      <a href="#about"       class="mobile-link nav-link text-base text-white/60 uppercase tracking-widest transition-colors" data-i18n="nav-about">About</a>
+      <a href="contact.html" class="mobile-link nav-link text-base text-white/60 uppercase tracking-widest transition-colors" data-i18n="nav-contact">Contact</a>
     </nav>
-
     <div class="mt-auto">
-      <a href="#apps"
-         class="mobile-link flex items-center justify-center gap-2 w-full px-6 py-3 rounded-full
-                bg-[#5ed29c] text-[#070b0a] text-sm font-bold uppercase tracking-wider
-                hover:brightness-110 active:scale-[0.97] transition-all">
-        Ver Apps
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
-        </svg>
-      </a>
+      <a href="work.html" class="mobile-link flex items-center justify-center gap-2 w-full px-6 py-3 rounded-full bg-[#5ed29c] text-[#070b0a] text-sm font-bold uppercase tracking-wider hover:brightness-110 active:scale-[0.97] transition-all" data-i18n="nav-cta">View Work</a>
     </div>
   </div>
 
-
-  <!-- ══════════════════════════════════════════
-       NAVBAR
-  ═════════════════════════════════════════════ -->
+  <!-- NAVBAR -->
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-16 py-5">
-
     <a href="/" class="flex items-center gap-3">
       <svg width="30" height="30" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
         <line x1="28" y1="112" x2="96" y2="112" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
         <line x1="96" y1="112" x2="163" y2="56" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
         <circle cx="163" cy="56" r="10" fill="#5ed29c"/>
       </svg>
-      <span class="font-inter font-semibold text-xl text-white tracking-tight">
-        Waysider<span style="color:#5ed29c;">.</span>
-      </span>
+      <span class="font-inter font-semibold text-xl text-white tracking-tight">Waysider<span style="color:#5ed29c;">.</span></span>
     </a>
-
     <div class="hidden md:flex items-center gap-8">
-      <a href="#apps"       class="nav-link text-base text-white/70 uppercase tracking-widest transition-colors">Apps</a>
-      <a href="#about"      class="nav-link text-base text-white/70 uppercase tracking-widest transition-colors">El Dev</a>
-      <a href="#features"   class="nav-link text-base text-white/70 uppercase tracking-widest transition-colors">Filosofía</a>
-      <a href="contact.html" class="nav-link text-base text-white/70 uppercase tracking-widest transition-colors">Contacto</a>
+      <a href="work.html"    class="nav-link text-sm text-white/70 uppercase tracking-widest transition-colors" data-i18n="nav-work">Work</a>
+      <a href="#apps"        class="nav-link text-sm text-white/70 uppercase tracking-widest transition-colors" data-i18n="nav-apps">Apps</a>
+      <a href="#about"       class="nav-link text-sm text-white/70 uppercase tracking-widest transition-colors" data-i18n="nav-about">About</a>
+      <a href="contact.html" class="nav-link text-sm text-white/70 uppercase tracking-widest transition-colors" data-i18n="nav-contact">Contact</a>
     </div>
-
-    <a href="#apps"
-       class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full
-              bg-[#5ed29c] text-[#070b0a] text-xs font-bold uppercase tracking-wider
-              hover:brightness-110 active:scale-[0.97] transition-all">
-      Ver Apps
-    </a>
-
-    <!-- Hamburger -->
-    <button id="menu-toggle"
-            class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
-            aria-label="Abrir menú" aria-expanded="false">
+    <a href="work.html" class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#5ed29c] text-[#070b0a] text-xs font-bold uppercase tracking-wider hover:brightness-110 active:scale-[0.97] transition-all" data-i18n="nav-cta">View Work</a>
+    <button id="menu-toggle" class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5" aria-label="Open menu" aria-expanded="false">
       <span class="block w-5 h-px bg-white transition-all duration-300"></span>
       <span class="block w-5 h-px bg-white transition-all duration-300"></span>
       <span class="block w-3 h-px bg-white transition-all duration-300 self-start"></span>
@@ -260,571 +123,382 @@
   </nav>
 
 
-  <!-- ══════════════════════════════════════════
-       HERO
-  ═════════════════════════════════════════════ -->
-  <section class="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden"
-           style="background:#070b0a;">
-
-    <!-- Background video (HLS) -->
-    <video id="bg-video"
-           class="absolute inset-0 w-full h-full object-cover"
-           style="opacity:0.6;"
-           autoplay muted loop playsinline></video>
-
-    <!-- Left gradient overlay -->
-    <div class="absolute inset-0 pointer-events-none"
-         style="background: linear-gradient(to right, #070b0a 0%, transparent 60%);"></div>
-
-    <!-- Bottom gradient -->
-    <div class="absolute inset-0 pointer-events-none"
-         style="background: linear-gradient(to top, #070b0a 8%, transparent 50%);"></div>
-
-    <!-- Vertical grid lines (desktop) -->
+  <!-- HERO -->
+  <section class="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden" style="background:#070b0a;">
+    <video id="bg-video" class="absolute inset-0 w-full h-full object-cover" style="opacity:0.6;" autoplay muted loop playsinline></video>
+    <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to right,#070b0a 0%,transparent 60%);"></div>
+    <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to top,#070b0a 8%,transparent 50%);"></div>
     <div class="hidden lg:block absolute inset-0 pointer-events-none" style="z-index:2;">
       <div class="absolute inset-y-0 left-1/4 w-px" style="background:rgba(255,255,255,0.1);"></div>
       <div class="absolute inset-y-0 left-1/2 w-px" style="background:rgba(255,255,255,0.1);"></div>
       <div class="absolute inset-y-0 left-3/4 w-px" style="background:rgba(255,255,255,0.1);"></div>
     </div>
-
-    <!-- SVG ellipse glow (center-top) -->
     <svg class="absolute top-0 left-0 w-full pointer-events-none" height="320" style="z-index:1;">
-      <defs>
-        <filter id="glow25"><feGaussianBlur stdDeviation="25"/></filter>
-      </defs>
-      <ellipse cx="50%" cy="0" rx="55%" ry="130"
-               fill="rgba(94,210,156,0.13)" filter="url(#glow25)"/>
+      <defs><filter id="glow25"><feGaussianBlur stdDeviation="25"/></filter></defs>
+      <ellipse cx="50%" cy="0" rx="55%" ry="130" fill="rgba(94,210,156,0.13)" filter="url(#glow25)"/>
     </svg>
 
-    <!-- Hero content -->
     <div class="relative flex flex-col items-center text-center px-6 max-w-4xl mx-auto" style="z-index:10;">
-
-      <!-- Liquid glass card — shifted up 50px -->
       <div class="glass-card rounded-2xl p-5 w-[200px] animate-float opacity-0 animate-fade-in"
            style="height:200px; transform:translateY(-50px); margin-bottom:-50px; animation-delay:0.1s;">
         <div class="flex flex-col justify-center h-full gap-2">
           <span class="text-[11px] text-white/40 font-mono tracking-widest">[ 2025 ]</span>
           <p class="text-[15px] font-semibold text-white leading-snug">
-            Hecho por<br/>
-            <em class="font-serif italic text-[#5ed29c] not-italic" style="font-style:italic;">una sola persona</em>
+            Built by<br/>
+            <em class="font-serif text-[#5ed29c]" style="font-style:italic;" data-i18n="hero-card-em">one person</em>
           </p>
-          <p class="text-[10px] text-white/40 leading-relaxed">
-            Apps que hacen lo que tienen que hacer. Nada más.
-          </p>
+          <p class="text-[10px] text-white/40 leading-relaxed" data-i18n="hero-card-sub">Apps and projects that do what they should. Nothing more.</p>
         </div>
       </div>
 
-      <!-- Eyebrow -->
-      <p class="opacity-0 animate-fade-up font-jakarta font-bold text-[11px] text-[#5ed29c] uppercase tracking-widest mb-4"
-         style="animation-delay:0.2s;">
-        Developer Independiente · Android
-      </p>
+      <p class="opacity-0 animate-fade-up font-jakarta font-bold text-[11px] text-[#5ed29c] uppercase tracking-widest mb-4" style="animation-delay:0.2s;" data-i18n="hero-eyebrow">Independent Developer · Android & Web</p>
 
-      <!-- Headline -->
       <h1 class="opacity-0 animate-fade-up font-inter font-extrabold uppercase tracking-tight text-white leading-[1.02] mb-6"
           style="font-size:clamp(2.5rem,8vw,4.5rem); animation-delay:0.35s;">
-        APPS SIN RODEOS<span style="color:#5ed29c;">.</span>
+        <span data-i18n="hero-headline">WITHOUT SHORTCUTS</span><span style="color:#5ed29c;">.</span>
       </h1>
 
-      <!-- Description -->
-      <p class="opacity-0 animate-fade-up text-[14px] text-white/70 max-w-[512px] mb-8 leading-relaxed"
-         style="animation-delay:0.5s;">
-        Herramientas Android para la vida cotidiana. Sin 50 funciones que nunca vas a usar.
-        Una sola cosa, bien hecha, que se ve bonita.
+      <p class="opacity-0 animate-fade-up text-[14px] text-white/70 max-w-[512px] mb-8 leading-relaxed" style="animation-delay:0.5s;" data-i18n="hero-description">
+        Tools and projects for everyday life. No bloat, no filler features. One thing, done right, that looks good doing it.
       </p>
 
-      <!-- CTA -->
       <div class="opacity-0 animate-fade-up flex flex-wrap gap-3 justify-center" style="animation-delay:0.65s;">
-        <a href="#apps"
-           class="flex items-center gap-2 px-7 py-3.5 rounded-full
-                  bg-[#5ed29c] text-[#070b0a] text-sm font-bold uppercase tracking-wider
-                  hover:brightness-110 active:scale-[0.97] transition-all">
-          Ver las apps
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
-          </svg>
+        <a href="work.html" class="flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#5ed29c] text-[#070b0a] text-sm font-bold uppercase tracking-wider hover:brightness-110 active:scale-[0.97] transition-all" data-i18n="hero-cta-primary">
+          View my work
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
         </a>
-        <a href="about.html"
-           class="flex items-center px-7 py-3.5 rounded-full
-                  border text-white text-sm font-medium uppercase tracking-wider
-                  hover:border-white/40 active:scale-[0.97] transition-all"
-           style="border-color:rgba(255,255,255,0.15);">
-          Sobre mí
-        </a>
+        <a href="about.html" class="flex items-center px-7 py-3.5 rounded-full border text-white text-sm font-medium uppercase tracking-wider hover:border-white/40 active:scale-[0.97] transition-all" style="border-color:rgba(255,255,255,0.15);" data-i18n="hero-cta-secondary">About me</a>
       </div>
 
-      <!-- Trust -->
-      <p class="opacity-0 animate-fade-up text-xs font-light mt-6"
-         style="color:rgba(255,255,255,0.3); animation-delay:0.8s;">
-        Hecho con cuidado &nbsp;·&nbsp; Android &nbsp;·&nbsp; Sin dark patterns &nbsp;·&nbsp; Privacy-first
+      <p class="opacity-0 animate-fade-up text-xs font-light mt-6" style="color:rgba(255,255,255,0.3); animation-delay:0.8s;" data-i18n="hero-trust">
+        Made with care · Android · No dark patterns · Privacy-first
       </p>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════
-       TRUST MARQUEE
-  ═════════════════════════════════════════════ -->
-  <section class="py-10 overflow-hidden marquee-wrap"
-           style="border-top:1px solid rgba(255,255,255,0.06); border-bottom:1px solid rgba(255,255,255,0.06);">
+  <!-- MARQUEE -->
+  <section class="py-10 overflow-hidden marquee-wrap" style="border-top:1px solid rgba(255,255,255,0.06); border-bottom:1px solid rgba(255,255,255,0.06);">
     <div class="marquee-track flex items-center gap-14 animate-marquee whitespace-nowrap select-none">
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Android</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Google Play</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Privacy First</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Sin suscripciones</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Sin bloat</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Foco radical</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Indie</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Diseño que importa</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <!-- repeat -->
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Android</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Google Play</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Privacy First</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Sin suscripciones</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Sin bloat</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Foco radical</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Indie</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
-      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Diseño que importa</span>
-      <span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Android</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Google Play</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Privacy First</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">No subscriptions</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">No bloat</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Radical focus</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Indie</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Design that matters</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Android</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Google Play</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Privacy First</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">No subscriptions</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">No bloat</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Radical focus</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Indie</span><span style="color:rgba(255,255,255,0.1);">·</span>
+      <span class="text-xs uppercase tracking-widest" style="color:rgba(255,255,255,0.25);">Design that matters</span><span style="color:rgba(255,255,255,0.1);">·</span>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════
-       APPS
-  ═════════════════════════════════════════════ -->
+  <!-- APPS -->
   <section id="apps" class="py-32 px-6 md:px-12 lg:px-16 max-w-7xl mx-auto rg">
-
     <div class="mb-16">
-      <span class="reveal block text-xs text-[#5ed29c] uppercase tracking-widest mb-4 font-jakarta font-bold">Las apps</span>
-      <h2 class="reveal font-inter font-extrabold text-white mb-4"
-          style="font-size:clamp(2rem,4.5vw,3.5rem); line-height:1.05; letter-spacing:-0.03em;">
-        Una cosa.<br/>Bien hecha.
+      <span class="reveal block text-xs text-[#5ed29c] uppercase tracking-widest mb-4 font-jakarta font-bold" data-i18n="apps-label">Apps</span>
+      <h2 class="reveal font-inter font-extrabold text-white mb-4" style="font-size:clamp(2rem,4.5vw,3.5rem); line-height:1.05; letter-spacing:-0.03em;">
+        <span data-i18n="apps-title-1">One thing.</span><br/><span data-i18n="apps-title-2">Done right.</span>
       </h2>
-      <p class="reveal text-white/60 max-w-lg" style="font-size:1.1rem; line-height:1.8;">
-        Cada app tiene un propósito claro. Sin ruido, sin features de relleno.
-      </p>
+      <p class="reveal text-white/60 max-w-lg" style="font-size:1.1rem; line-height:1.8;" data-i18n="apps-sub">Each app has a clear purpose. No noise, no filler features.</p>
     </div>
-
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
       <!-- Audio Player -->
       <div class="reveal card">
         <div class="card-inner p-7">
-          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
-               style="background:rgba(94,210,156,0.08); border:1px solid rgba(94,210,156,0.15);">
-            <svg class="w-7 h-7" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-            </svg>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style="background:rgba(94,210,156,0.08); border:1px solid rgba(94,210,156,0.15);">
+            <svg class="w-7 h-7" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
           </div>
           <div class="flex items-center gap-2 mb-2">
             <span class="font-inter font-semibold text-white text-lg">Audio Player</span>
-            <span class="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider"
-                  style="background:rgba(94,210,156,0.1); color:#5ed29c; border:1px solid rgba(94,210,156,0.2);">Pronto</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider" style="background:rgba(94,210,156,0.1); color:#5ed29c; border:1px solid rgba(94,210,156,0.2);" data-i18n="badge-soon">Soon</span>
           </div>
-          <p class="text-white/50 text-sm mb-5 leading-relaxed">
-            Reproductor de música limpio para tu biblioteca local. Sin streaming, sin cuenta. Solo tu música.
-          </p>
+          <p class="text-white/50 text-sm mb-5 leading-relaxed" data-i18n="app-audio-desc">Clean music player for your local library. No streaming, no account. Just your music.</p>
           <div class="flex flex-wrap gap-1.5 mb-5">
-            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);">Archivos locales</span>
-            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);">Sin internet</span>
-            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);">Gratis</span>
+            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);" data-i18n="tag-local">Local files</span>
+            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);" data-i18n="tag-offline">Offline</span>
+            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);" data-i18n="tag-free">Free</span>
           </div>
-          <a href="apps.html" class="inline-flex items-center gap-1.5 text-xs font-medium transition-colors"
-             style="color:#5ed29c;">
-            Ver detalles
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
-            </svg>
-          </a>
+          <a href="apps.html" class="inline-flex items-center gap-1.5 text-xs font-medium transition-colors" style="color:#5ed29c;" data-i18n="link-details">View details <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></a>
         </div>
       </div>
-
       <!-- PDF Signer -->
       <div class="reveal card">
         <div class="card-inner p-7">
-          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
-               style="background:rgba(94,210,156,0.06); border:1px solid rgba(94,210,156,0.1);">
-            <svg class="w-7 h-7" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-            </svg>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style="background:rgba(94,210,156,0.06); border:1px solid rgba(94,210,156,0.1);">
+            <svg class="w-7 h-7" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           </div>
           <div class="flex items-center gap-2 mb-2">
             <span class="font-inter font-semibold text-white text-lg">PDF Signer</span>
-            <span class="text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wider"
-                  style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.08);">En desarrollo</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wider" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.08);" data-i18n="badge-wip">In progress</span>
           </div>
-          <p class="text-white/50 text-sm mb-5 leading-relaxed">
-            Firmá PDFs directo desde el teléfono. Rápido, offline, privado. Sin subir archivos a ningún servidor externo.
-          </p>
+          <p class="text-white/50 text-sm mb-5 leading-relaxed" data-i18n="app-pdf-desc">Sign PDFs directly from your phone. Fast, offline, private. No file uploads to external servers.</p>
           <div class="flex flex-wrap gap-1.5 mb-5">
-            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);">100% offline</span>
-            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);">Firma manual</span>
-            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);">Gratis</span>
+            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);" data-i18n="tag-100offline">100% offline</span>
+            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);" data-i18n="tag-sign">Hand signature</span>
+            <span class="text-xs px-2.5 py-1 rounded-lg" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);" data-i18n="tag-free">Free</span>
           </div>
-          <a href="apps.html" class="inline-flex items-center gap-1.5 text-xs font-medium transition-colors"
-             style="color:#5ed29c;">
-            Ver detalles
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
-            </svg>
-          </a>
+          <a href="apps.html" class="inline-flex items-center gap-1.5 text-xs font-medium transition-colors" style="color:#5ed29c;" data-i18n="link-details">View details <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></a>
         </div>
       </div>
-
-      <!-- Coming soon -->
+      <!-- More -->
       <div class="reveal card" style="opacity:0.4; pointer-events:none;">
         <div class="card-inner p-7 flex flex-col items-center justify-center min-h-[240px] text-center">
-          <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4"
-               style="border:1px dashed rgba(255,255,255,0.12);">
-            <span style="color:rgba(255,255,255,0.2); font-size:1.5rem; line-height:1;">+</span>
-          </div>
-          <p style="color:rgba(255,255,255,0.2); font-size:0.875rem;">Más apps en camino</p>
+          <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="border:1px dashed rgba(255,255,255,0.12);"><span style="color:rgba(255,255,255,0.2); font-size:1.5rem; line-height:1;">+</span></div>
+          <p style="color:rgba(255,255,255,0.2); font-size:0.875rem;" data-i18n="apps-more">More apps coming</p>
         </div>
       </div>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════
-       ABOUT
-  ═════════════════════════════════════════════ -->
-  <section id="about" class="py-32 px-6 md:px-12 lg:px-16"
-           style="background:rgba(255,255,255,0.015);">
+  <!-- ABOUT -->
+  <section id="about" class="py-32 px-6 md:px-12 lg:px-16" style="background:rgba(255,255,255,0.015);">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center rg">
-
       <div>
-        <span class="reveal block text-xs font-jakarta font-bold text-[#5ed29c] uppercase tracking-widest mb-5">El developer</span>
-        <h2 class="reveal font-inter font-extrabold text-white mb-6"
-            style="font-size:clamp(2rem,4vw,3rem); line-height:1.05; letter-spacing:-0.03em;">
-          Sé lo que la gente<br/>necesita sin rodeos.
+        <span class="reveal block text-xs font-jakarta font-bold text-[#5ed29c] uppercase tracking-widest mb-5" data-i18n="about-label">The developer</span>
+        <h2 class="reveal font-inter font-extrabold text-white mb-6" style="font-size:clamp(2rem,4vw,3rem); line-height:1.05; letter-spacing:-0.03em;">
+          <span data-i18n="about-title-1">Building things</span><br/><span data-i18n="about-title-2">that actually work.</span>
         </h2>
-        <p class="reveal text-white/55 mb-4" style="line-height:1.85;">
-          Soy Graham. Desarrollo apps Android de forma independiente. Sin un equipo de producto que agrega features para justificar su sueldo. Sin roadmaps inflados.
-        </p>
-        <p class="reveal text-white/55 mb-10" style="line-height:1.85;">
-          Solo yo, entendiendo qué necesita la gente real, y construyéndolo bien.
-        </p>
+        <p class="reveal text-white/55 mb-4" style="line-height:1.85;" data-i18n="about-p1">I'm Graham. I build Android apps, web projects, and tools independently. No product team adding features to justify salaries. No bloated roadmaps.</p>
+        <p class="reveal text-white/55 mb-10" style="line-height:1.85;" data-i18n="about-p2">Just me, understanding what real people need, and building it well.</p>
         <div class="reveal">
-          <a href="about.html"
-             class="btn-trail group inline-flex items-center gap-3 px-6 py-3 rounded-full
-                    text-white text-sm font-medium
-                    hover:border-white/30 active:scale-[0.97] transition-all"
-             style="border:1px solid rgba(255,255,255,0.12);">
-            <span>Leer más</span>
-            <span class="ti w-6 h-6 rounded-full flex items-center justify-center text-xs leading-none"
-                  style="background:rgba(255,255,255,0.08);">→</span>
+          <a href="about.html" class="btn-trail group inline-flex items-center gap-3 px-6 py-3 rounded-full text-white text-sm font-medium hover:border-white/30 active:scale-[0.97] transition-all" style="border:1px solid rgba(255,255,255,0.12);">
+            <span data-i18n="about-link">Read more</span>
+            <span class="ti w-6 h-6 rounded-full flex items-center justify-center text-xs leading-none" style="background:rgba(255,255,255,0.08);">→</span>
           </a>
         </div>
       </div>
-
       <div class="grid grid-cols-2 gap-4 rg">
-        <div class="reveal card">
-          <div class="card-inner p-6">
-            <span class="font-inter font-bold text-white text-4xl block mb-2 leading-none">0→</span>
-            <span class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.4);">Apps publicadas<br/>(en desarrollo)</span>
-          </div>
-        </div>
-        <div class="reveal card">
-          <div class="card-inner p-6">
-            <span class="font-inter font-bold text-4xl block mb-2 leading-none" style="color:#5ed29c;">1</span>
-            <span class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.4);">Función por app.<br/>Siempre.</span>
-          </div>
-        </div>
-        <div class="reveal card col-span-2">
-          <div class="card-inner p-6">
-            <p class="text-sm leading-relaxed italic" style="color:rgba(255,255,255,0.5); font-family:'Instrument Serif', serif;">
-              "Si tu abuela no puede usarlo desde el primer toque, hay algo mal en el diseño."
-            </p>
-            <span class="text-xs mt-3 block" style="color:rgba(255,255,255,0.2);">— Principio de diseño, Waysider</span>
-          </div>
-        </div>
+        <div class="reveal card"><div class="card-inner p-6">
+          <span class="font-inter font-bold text-white text-4xl block mb-2 leading-none">0→</span>
+          <span class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.4);" data-i18n="stat-apps">Apps published<br/>(in progress)</span>
+        </div></div>
+        <div class="reveal card"><div class="card-inner p-6">
+          <span class="font-inter font-bold text-4xl block mb-2 leading-none" style="color:#5ed29c;">1</span>
+          <span class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.4);" data-i18n="stat-focus">Purpose per app.<br/>Always.</span>
+        </div></div>
+        <div class="reveal card col-span-2"><div class="card-inner p-6">
+          <p class="text-sm leading-relaxed italic" style="color:rgba(255,255,255,0.5); font-family:'Instrument Serif',serif;" data-i18n="about-quote">"If your grandmother can't use it on the first tap, something is wrong with the design."</p>
+          <span class="text-xs mt-3 block" style="color:rgba(255,255,255,0.2);">— Design principle, Waysider</span>
+        </div></div>
       </div>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════
-       BENTO — FILOSOFÍA
-  ═════════════════════════════════════════════ -->
+  <!-- PHILOSOPHY -->
   <section id="features" class="py-32 px-6 md:px-12 lg:px-16 max-w-7xl mx-auto">
-
     <div class="mb-16 text-center rg">
-      <span class="reveal block text-xs font-jakarta font-bold text-[#5ed29c] uppercase tracking-widest mb-4">Filosofía</span>
-      <h2 class="reveal font-inter font-extrabold text-white"
-          style="font-size:clamp(2rem,4.5vw,3.5rem); line-height:1.05; letter-spacing:-0.03em;">
-        Por qué Waysider<br/>se siente diferente.
+      <span class="reveal block text-xs font-jakarta font-bold text-[#5ed29c] uppercase tracking-widest mb-4" data-i18n="phil-label">Philosophy</span>
+      <h2 class="reveal font-inter font-extrabold text-white" style="font-size:clamp(2rem,4.5vw,3.5rem); line-height:1.05; letter-spacing:-0.03em;">
+        <span data-i18n="phil-title-1">Why Waysider</span><br/><span data-i18n="phil-title-2">feels different.</span>
       </h2>
     </div>
-
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 rg">
-
-      <div class="reveal card md:col-span-2">
-        <div class="card-inner p-8">
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-6"
-               style="background:rgba(94,210,156,0.08); border:1px solid rgba(94,210,156,0.15);">
-            <svg class="w-5 h-5" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-          </div>
-          <h3 class="font-inter font-semibold text-white text-xl mb-3">Foco radical</h3>
-          <p style="color:rgba(255,255,255,0.55);" class="leading-relaxed">
-            Cada app tiene una función. Eso es todo. No hay pestañas escondidas, configuraciones de experto, ni features "para cuando crezcas". Si necesitás tres herramientas, descargás tres apps — cada una perfecta en lo suyo.
-          </p>
-        </div>
-      </div>
-
-      <div class="reveal card">
-        <div class="card-inner p-8">
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-6"
-               style="background:rgba(94,210,156,0.06); border:1px solid rgba(94,210,156,0.1);">
-            <svg class="w-5 h-5" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
-            </svg>
-          </div>
-          <h3 class="font-inter font-semibold text-white text-lg mb-3">Sin dark patterns</h3>
-          <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.55);">No hay botones de cierre microscópicos. No hay "prueba gratis (requiere tarjeta)". No hay notificaciones que no pediste.</p>
-        </div>
-      </div>
-
-      <div class="reveal card">
-        <div class="card-inner p-8">
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-6"
-               style="background:rgba(94,210,156,0.08); border:1px solid rgba(94,210,156,0.15);">
-            <svg class="w-5 h-5" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
-            </svg>
-          </div>
-          <h3 class="font-inter font-semibold text-white text-lg mb-3">Privacidad de verdad</h3>
-          <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.55);">Política de privacidad real y legible. Sin datos que no necesito. Sin vender información a terceros.</p>
-        </div>
-      </div>
-
-      <div class="reveal card md:col-span-2">
-        <div class="card-inner p-8">
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-6"
-               style="background:rgba(94,210,156,0.06); border:1px solid rgba(94,210,156,0.1);">
-            <svg class="w-5 h-5" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/>
-            </svg>
-          </div>
-          <h3 class="font-inter font-semibold text-white text-xl mb-3">Diseño que importa</h3>
-          <p class="leading-relaxed" style="color:rgba(255,255,255,0.55);">
-            "Que funcione" no es suficiente. Tiene que verse bien también. El diseño no es decoración — es la diferencia entre una app que usás todos los días y una que desinstalás a los 3 minutos.
-          </p>
-        </div>
-      </div>
+      <div class="reveal card md:col-span-2"><div class="card-inner p-8">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-6" style="background:rgba(94,210,156,0.08); border:1px solid rgba(94,210,156,0.15);"><svg class="w-5 h-5" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+        <h3 class="font-inter font-semibold text-white text-xl mb-3" data-i18n="phil-1-title">Radical focus</h3>
+        <p style="color:rgba(255,255,255,0.55);" class="leading-relaxed" data-i18n="phil-1-body">Each app does one thing. That's it. No hidden tabs, no expert settings, no features "for when you grow". If you need three tools, you download three apps — each perfect at its job.</p>
+      </div></div>
+      <div class="reveal card"><div class="card-inner p-8">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-6" style="background:rgba(94,210,156,0.06); border:1px solid rgba(94,210,156,0.1);"><svg class="w-5 h-5" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg></div>
+        <h3 class="font-inter font-semibold text-white text-lg mb-3" data-i18n="phil-2-title">No dark patterns</h3>
+        <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.55);" data-i18n="phil-2-body">No microscopic close buttons. No "free trial (card required)". No notifications you never asked for.</p>
+      </div></div>
+      <div class="reveal card"><div class="card-inner p-8">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-6" style="background:rgba(94,210,156,0.08); border:1px solid rgba(94,210,156,0.15);"><svg class="w-5 h-5" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg></div>
+        <h3 class="font-inter font-semibold text-white text-lg mb-3" data-i18n="phil-3-title">Real privacy</h3>
+        <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.55);" data-i18n="phil-3-body">Honest, readable privacy policy. No data I don't need. No selling information to third parties.</p>
+      </div></div>
+      <div class="reveal card md:col-span-2"><div class="card-inner p-8">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-6" style="background:rgba(94,210,156,0.06); border:1px solid rgba(94,210,156,0.1);"><svg class="w-5 h-5" style="color:#5ed29c;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/></svg></div>
+        <h3 class="font-inter font-semibold text-white text-xl mb-3" data-i18n="phil-4-title">Design that matters</h3>
+        <p class="leading-relaxed" style="color:rgba(255,255,255,0.55);" data-i18n="phil-4-body">"It works" is not enough. It has to look good too. Design is not decoration — it's the difference between an app you use every day and one you uninstall in 3 minutes.</p>
+      </div></div>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════
-       PRIVACY BAR
-  ═════════════════════════════════════════════ -->
-  <section class="py-20 px-6 md:px-12 lg:px-16"
-           style="border-top:1px solid rgba(255,255,255,0.06);">
+  <!-- PRIVACY BAR -->
+  <section class="py-20 px-6 md:px-12 lg:px-16" style="border-top:1px solid rgba(255,255,255,0.06);">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8 rg">
       <div class="reveal">
-        <span class="block text-xs uppercase tracking-widest mb-2 font-jakarta font-bold"
-              style="color:rgba(255,255,255,0.2);">Cumplimiento</span>
-        <h3 class="font-inter font-semibold text-white text-2xl mb-2">Privacy Policy por app</h3>
-        <p class="text-sm max-w-md leading-relaxed" style="color:rgba(255,255,255,0.45);">
-          Cada app de Waysider tiene su propia política de privacidad, compatible con Google Play Store y AdMob. Siempre legible, siempre honesta.
-        </p>
+        <span class="block text-xs uppercase tracking-widest mb-2 font-jakarta font-bold" style="color:rgba(255,255,255,0.2);" data-i18n="privacy-label">Compliance</span>
+        <h3 class="font-inter font-semibold text-white text-2xl mb-2" data-i18n="privacy-title">Privacy Policy per app</h3>
+        <p class="text-sm max-w-md leading-relaxed" style="color:rgba(255,255,255,0.45);" data-i18n="privacy-body">Each Waysider app has its own privacy policy, compliant with Google Play Store and AdMob. Always readable, always honest.</p>
       </div>
       <div class="reveal">
-        <a href="privacy.html"
-           class="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm transition-all"
-           style="border:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.5);"
-           onmouseover="this.style.borderColor='rgba(94,210,156,0.4)'; this.style.color='#fff';"
-           onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.color='rgba(255,255,255,0.5)';">
-          Ver política de privacidad
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
-          </svg>
+        <a href="privacy.html" class="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm transition-all" style="border:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.5);" onmouseover="this.style.borderColor='rgba(94,210,156,0.4)';this.style.color='#fff';" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)';" data-i18n="privacy-link">
+          View privacy policy <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
         </a>
       </div>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════
-       CLOSING CTA
-  ═════════════════════════════════════════════ -->
+  <!-- CTA -->
   <section id="cta" class="py-32 px-6 md:px-12 relative overflow-hidden">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                pointer-events-none rounded-full"
-         style="width:600px; height:360px; background:rgba(94,210,156,0.06); filter:blur(80px);"></div>
-
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none rounded-full" style="width:600px; height:360px; background:rgba(94,210,156,0.06); filter:blur(80px);"></div>
     <div class="relative max-w-3xl mx-auto text-center rg">
-      <span class="reveal block text-xs font-jakarta font-bold text-[#5ed29c] uppercase tracking-widest mb-6">¿Tenés feedback?</span>
-      <h2 class="reveal font-inter font-extrabold text-white mb-6"
-          style="font-size:clamp(2.5rem,5.5vw,4.5rem); line-height:1.02; letter-spacing:-0.04em;">
-        Contactame.
-      </h2>
-      <p class="reveal text-sm mb-10 max-w-lg mx-auto" style="color:rgba(255,255,255,0.5); line-height:1.8;">
-        Si tenés feedback sobre alguna app, una sugerencia, o simplemente querés decir hola — me llegará directamente a mí.
-      </p>
+      <span class="reveal block text-xs font-jakarta font-bold text-[#5ed29c] uppercase tracking-widest mb-6" data-i18n="cta-label">Got feedback?</span>
+      <h2 class="reveal font-inter font-extrabold text-white mb-6" style="font-size:clamp(2.5rem,5.5vw,4.5rem); line-height:1.02; letter-spacing:-0.04em;" data-i18n="cta-title">Get in touch.</h2>
+      <p class="reveal text-sm mb-10 max-w-lg mx-auto" style="color:rgba(255,255,255,0.5); line-height:1.8;" data-i18n="cta-body">If you have feedback on an app, a suggestion, or just want to say hello — it goes directly to me.</p>
       <div class="reveal flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="contact.html"
-           class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full
-                  bg-[#5ed29c] text-[#070b0a] text-sm font-bold uppercase tracking-wider
-                  hover:brightness-110 active:scale-[0.97] transition-all">
-          Escribir mensaje
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
-          </svg>
+        <a href="contact.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#5ed29c] text-[#070b0a] text-sm font-bold uppercase tracking-wider hover:brightness-110 active:scale-[0.97] transition-all" data-i18n="cta-btn-primary">
+          Send a message <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
         </a>
-        <a href="apps.html"
-           class="inline-flex items-center justify-center px-8 py-4 rounded-full
-                  text-sm font-medium uppercase tracking-wider
-                  active:scale-[0.97] transition-all"
-           style="border:1px solid rgba(255,255,255,0.12); color:rgba(255,255,255,0.6);"
-           onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'; this.style.color='#fff';"
-           onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.color='rgba(255,255,255,0.6)';">
-          Ver todas las apps
-        </a>
+        <a href="work.html" class="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-medium uppercase tracking-wider active:scale-[0.97] transition-all" style="border:1px solid rgba(255,255,255,0.12); color:rgba(255,255,255,0.6);" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)';this.style.color='#fff';" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.6)';" data-i18n="cta-btn-secondary">View all work</a>
       </div>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════
-       FOOTER
-  ═════════════════════════════════════════════ -->
-  <footer class="py-16 px-6 md:px-12 lg:px-16"
-          style="border-top:1px solid rgba(255,255,255,0.06);">
+  <!-- FOOTER -->
+  <footer class="py-16 px-6 md:px-12 lg:px-16" style="border-top:1px solid rgba(255,255,255,0.06);">
     <div class="max-w-7xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
         <div class="md:col-span-2">
-          <a href="/" class="font-inter font-semibold text-xl text-white tracking-tight block mb-3">Waysider</a>
-          <p class="text-sm leading-relaxed max-w-xs" style="color:rgba(255,255,255,0.35);">
-            Herramientas Android para la vida cotidiana. Simples, bonitas, enfocadas.
-          </p>
-          <p class="text-xs mt-4 italic font-serif" style="color:rgba(255,255,255,0.15);">Apps sin rodeos.</p>
+          <a href="/" class="font-inter font-semibold text-xl text-white tracking-tight block mb-3">Waysider<span style="color:#5ed29c;">.</span></a>
+          <p class="text-sm leading-relaxed max-w-xs" style="color:rgba(255,255,255,0.35);" data-i18n="footer-desc">Tools and projects for everyday life. Simple, focused, well-made.</p>
+          <p class="text-xs mt-4 italic font-serif" style="color:rgba(255,255,255,0.15);" data-i18n="footer-tagline">Without shortcuts.</p>
         </div>
         <div>
-          <span class="text-xs uppercase tracking-widest block mb-4 font-jakarta font-bold"
-                style="color:rgba(255,255,255,0.2);">Apps</span>
+          <span class="text-xs uppercase tracking-widest block mb-4 font-jakarta font-bold" style="color:rgba(255,255,255,0.2);" data-i18n="footer-col-apps">Apps</span>
           <ul class="space-y-2.5">
-            <li><a href="apps.html"    class="text-sm transition-colors" style="color:rgba(255,255,255,0.4);" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';">Ver todas</a></li>
-            <li><a href="privacy.html" class="text-sm transition-colors" style="color:rgba(255,255,255,0.4);" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';">Privacy Policy</a></li>
+            <li><a href="apps.html"    class="text-sm" style="color:rgba(255,255,255,0.4);" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';" data-i18n="footer-all-apps">See all</a></li>
+            <li><a href="privacy.html" class="text-sm" style="color:rgba(255,255,255,0.4);" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';" data-i18n="footer-privacy">Privacy Policy</a></li>
           </ul>
         </div>
         <div>
-          <span class="text-xs uppercase tracking-widest block mb-4 font-jakarta font-bold"
-                style="color:rgba(255,255,255,0.2);">Sitio</span>
+          <span class="text-xs uppercase tracking-widest block mb-4 font-jakarta font-bold" style="color:rgba(255,255,255,0.2);" data-i18n="footer-col-site">Site</span>
           <ul class="space-y-2.5">
-            <li><a href="about.html"   class="text-sm" style="color:rgba(255,255,255,0.4);" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';">Sobre mí</a></li>
-            <li><a href="contact.html" class="text-sm" style="color:rgba(255,255,255,0.4);" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';">Contacto</a></li>
-            <li><a href="https://play.google.com/store/apps" target="_blank" rel="noopener noreferrer"
-                   class="text-sm" style="color:rgba(255,255,255,0.4);" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';">Google Play</a></li>
+            <li><a href="work.html"    class="text-sm" style="color:rgba(255,255,255,0.4);" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';" data-i18n="footer-work">Work</a></li>
+            <li><a href="about.html"   class="text-sm" style="color:rgba(255,255,255,0.4);" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';" data-i18n="footer-about">About</a></li>
+            <li><a href="contact.html" class="text-sm" style="color:rgba(255,255,255,0.4);" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';" data-i18n="footer-contact">Contact</a></li>
+            <li><a href="https://play.google.com/store/apps" target="_blank" rel="noopener noreferrer" class="text-sm" style="color:rgba(255,255,255,0.4);" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';">Google Play</a></li>
+            <li>
+              <a href="https://github.com/Raze500" target="_blank" rel="noopener noreferrer"
+                 class="text-sm inline-flex items-center gap-1.5 transition-colors" style="color:rgba(255,255,255,0.4);"
+                 onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.4)';">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                GitHub
+              </a>
+            </li>
           </ul>
         </div>
       </div>
-      <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4"
-           style="border-top:1px solid rgba(255,255,255,0.05);">
-        <p class="text-xs" style="color:rgba(255,255,255,0.2);">© 2025 Waysider. Todos los derechos reservados.</p>
-        <p class="text-xs" style="color:rgba(255,255,255,0.1);">Hecho con cuidado · Argentina</p>
+      <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4" style="border-top:1px solid rgba(255,255,255,0.05);">
+        <p class="text-xs" style="color:rgba(255,255,255,0.2);" data-i18n="footer-copy">© 2025 Waysider Studio. All rights reserved.</p>
+        <p class="text-xs" style="color:rgba(255,255,255,0.1);" data-i18n="footer-made">Made with care · Independent</p>
       </div>
     </div>
   </footer>
 
 
-  <!-- ══════════════════════════════════════════
-       JAVASCRIPT
-  ═════════════════════════════════════════════ -->
   <script>
-    // ── HLS video background ──
+    // HLS video
     const video = document.getElementById('bg-video');
     const HLS_SRC = 'https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8';
-
     if (typeof Hls !== 'undefined' && Hls.isSupported()) {
       const hls = new Hls({ enableWorker: false });
-      hls.loadSource(HLS_SRC);
-      hls.attachMedia(video);
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = HLS_SRC;
-    }
+      hls.loadSource(HLS_SRC); hls.attachMedia(video);
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src = HLS_SRC; }
 
-    // ── Navbar: hide on scroll-down, reveal on scroll-up ──
+    // Navbar
     const navbar = document.getElementById('navbar');
     let lastY = 0, raf = false;
-
     window.addEventListener('scroll', () => {
-      if (!raf) {
-        requestAnimationFrame(() => {
-          const y = window.scrollY;
-          navbar.classList.toggle('scrolled', y > 80);
-          if      (y > lastY + 5 && y > 120) navbar.classList.add('nav-hidden');
-          else if (y < lastY - 5)            navbar.classList.remove('nav-hidden');
-          lastY = y;
-          raf = false;
-        });
-        raf = true;
-      }
+      if (!raf) { requestAnimationFrame(() => { const y = window.scrollY; navbar.classList.toggle('scrolled', y > 80); if (y > lastY + 5 && y > 120) navbar.classList.add('nav-hidden'); else if (y < lastY - 5) navbar.classList.remove('nav-hidden'); lastY = y; raf = false; }); raf = true; }
     }, { passive: true });
 
-    // ── Mobile menu ──
-    const toggle    = document.getElementById('menu-toggle');
-    const closeBtn  = document.getElementById('menu-close');
-    const menu      = document.getElementById('mobile-menu');
-    const backdrop  = document.getElementById('mobile-backdrop');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
+    // Mobile menu
+    const toggle = document.getElementById('menu-toggle'), closeBtn = document.getElementById('menu-close');
+    const menu = document.getElementById('mobile-menu'), backdrop = document.getElementById('mobile-backdrop');
+    const openMenu  = () => { menu.classList.add('open'); backdrop.classList.add('open'); toggle.setAttribute('aria-expanded','true');  document.body.style.overflow='hidden'; };
+    const closeMenu = () => { menu.classList.remove('open'); backdrop.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); document.body.style.overflow=''; };
+    toggle.addEventListener('click', openMenu); closeBtn.addEventListener('click', closeMenu); backdrop.addEventListener('click', closeMenu);
+    document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMenu));
 
-    function openMenu() {
-      menu.classList.add('open');
-      backdrop.classList.add('open');
-      toggle.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeMenu() {
-      menu.classList.remove('open');
-      backdrop.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }
-
-    toggle.addEventListener('click', openMenu);
-    closeBtn.addEventListener('click', closeMenu);
-    backdrop.addEventListener('click', closeMenu);
-    mobileLinks.forEach(l => l.addEventListener('click', closeMenu));
-
-    // ── Scroll reveal: IntersectionObserver ──
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.1 });
-
+    // Scroll reveal
+    const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }), { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  </script>
 
-  <!-- Google Analytics — activar cuando tengas el ID -->
-  <!--
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
+    // i18n
+    const lang = (navigator.language || navigator.userLanguage || 'en').toLowerCase().startsWith('es') ? 'es' : 'en';
+    const translations = {
+      en: {
+        "nav-work":"Work","nav-apps":"Apps","nav-about":"About","nav-contact":"Contact","nav-cta":"View Work",
+        "hero-eyebrow":"Independent Developer · Android & Web",
+        "hero-card-em":"one person","hero-card-sub":"Apps and projects that do what they should. Nothing more.",
+        "hero-headline":"WITHOUT SHORTCUTS","hero-description":"Tools and projects for everyday life. No bloat, no filler features. One thing, done right, that looks good doing it.",
+        "hero-cta-primary":"View my work","hero-cta-secondary":"About me",
+        "hero-trust":"Made with care · Android · No dark patterns · Privacy-first",
+        "apps-label":"Apps","apps-title-1":"One thing.","apps-title-2":"Done right.","apps-sub":"Each app has a clear purpose. No noise, no filler features.",
+        "badge-soon":"Soon","badge-wip":"In progress",
+        "app-audio-desc":"Clean music player for your local library. No streaming, no account. Just your music.",
+        "app-pdf-desc":"Sign PDFs directly from your phone. Fast, offline, private. No file uploads to external servers.",
+        "tag-local":"Local files","tag-offline":"Offline","tag-free":"Free","tag-100offline":"100% offline","tag-sign":"Hand signature",
+        "link-details":"View details","apps-more":"More apps coming",
+        "about-label":"The developer","about-title-1":"Building things","about-title-2":"that actually work.",
+        "about-p1":"I'm Graham. I build Android apps, web projects, and tools independently. No product team adding features to justify salaries. No bloated roadmaps.",
+        "about-p2":"Just me, understanding what real people need, and building it well.","about-link":"Read more",
+        "stat-apps":"Apps published\n(in progress)","stat-focus":"Purpose per app.\nAlways.",
+        "about-quote":"\"If your grandmother can't use it on the first tap, something is wrong with the design.\"",
+        "phil-label":"Philosophy","phil-title-1":"Why Waysider","phil-title-2":"feels different.",
+        "phil-1-title":"Radical focus","phil-1-body":"Each app does one thing. That's it. No hidden tabs, no expert settings, no features \"for when you grow\". If you need three tools, you download three apps — each perfect at its job.",
+        "phil-2-title":"No dark patterns","phil-2-body":"No microscopic close buttons. No \"free trial (card required)\". No notifications you never asked for.",
+        "phil-3-title":"Real privacy","phil-3-body":"Honest, readable privacy policy. No data I don't need. No selling information to third parties.",
+        "phil-4-title":"Design that matters","phil-4-body":"\"It works\" is not enough. It has to look good too. Design is not decoration — it's the difference between an app you use every day and one you uninstall in 3 minutes.",
+        "privacy-label":"Compliance","privacy-title":"Privacy Policy per app","privacy-body":"Each Waysider app has its own privacy policy, compliant with Google Play Store and AdMob. Always readable, always honest.","privacy-link":"View privacy policy",
+        "cta-label":"Got feedback?","cta-title":"Get in touch.","cta-body":"If you have feedback on an app, a suggestion, or just want to say hello — it goes directly to me.","cta-btn-primary":"Send a message","cta-btn-secondary":"View all work",
+        "footer-desc":"Tools and projects for everyday life. Simple, focused, well-made.","footer-tagline":"Without shortcuts.",
+        "footer-col-apps":"Apps","footer-all-apps":"See all","footer-privacy":"Privacy Policy",
+        "footer-col-site":"Site","footer-work":"Work","footer-about":"About","footer-contact":"Contact",
+        "footer-copy":"© 2025 Waysider Studio. All rights reserved.","footer-made":"Made with care · Independent",
+      },
+      es: {
+        "nav-work":"Trabajo","nav-apps":"Apps","nav-about":"Sobre mí","nav-contact":"Contacto","nav-cta":"Ver trabajo",
+        "hero-eyebrow":"Developer Independiente · Android y Web",
+        "hero-card-em":"una sola persona","hero-card-sub":"Apps y proyectos que hacen lo que tienen que hacer. Nada más.",
+        "hero-headline":"SIN RODEOS","hero-description":"Herramientas y proyectos para la vida cotidiana. Sin bloat, sin features de relleno. Una cosa, bien hecha, que se ve bonita.",
+        "hero-cta-primary":"Ver mi trabajo","hero-cta-secondary":"Sobre mí",
+        "hero-trust":"Hecho con cuidado · Android · Sin dark patterns · Privacy-first",
+        "apps-label":"Apps","apps-title-1":"Una cosa.","apps-title-2":"Bien hecha.","apps-sub":"Cada app tiene un propósito claro. Sin ruido, sin features de relleno.",
+        "badge-soon":"Pronto","badge-wip":"En desarrollo",
+        "app-audio-desc":"Reproductor limpio para tu biblioteca local. Sin streaming, sin cuenta. Solo tu música.",
+        "app-pdf-desc":"Firmá PDFs directo desde el teléfono. Rápido, offline, privado. Sin subir archivos a servidores externos.",
+        "tag-local":"Archivos locales","tag-offline":"Sin internet","tag-free":"Gratis","tag-100offline":"100% offline","tag-sign":"Firma manual",
+        "link-details":"Ver detalles","apps-more":"Más apps en camino",
+        "about-label":"El developer","about-title-1":"Construyendo cosas","about-title-2":"que realmente funcionan.",
+        "about-p1":"Soy Graham. Desarrollo apps Android, proyectos web y herramientas de forma independiente. Sin un equipo de producto que agrega features para justificar su sueldo. Sin roadmaps inflados.",
+        "about-p2":"Solo yo, entendiendo qué necesita la gente real, y construyéndolo bien.","about-link":"Leer más",
+        "stat-apps":"Apps publicadas\n(en desarrollo)","stat-focus":"Función por app.\nSiempre.",
+        "about-quote":"\"Si tu abuela no puede usarlo desde el primer toque, hay algo mal en el diseño.\"",
+        "phil-label":"Filosofía","phil-title-1":"Por qué Waysider","phil-title-2":"se siente diferente.",
+        "phil-1-title":"Foco radical","phil-1-body":"Cada app tiene una función. Eso es todo. No hay pestañas escondidas, configuraciones de experto, ni features \"para cuando crezcas\". Si necesitás tres herramientas, descargás tres apps — cada una perfecta en lo suyo.",
+        "phil-2-title":"Sin dark patterns","phil-2-body":"No hay botones de cierre microscópicos. No hay \"prueba gratis (requiere tarjeta)\". No hay notificaciones que no pediste.",
+        "phil-3-title":"Privacidad de verdad","phil-3-body":"Política de privacidad real y legible. Sin datos que no necesito. Sin vender información a terceros.",
+        "phil-4-title":"Diseño que importa","phil-4-body":"\"Que funcione\" no es suficiente. Tiene que verse bien también. El diseño no es decoración — es la diferencia entre una app que usás todos los días y una que desinstalás a los 3 minutos.",
+        "privacy-label":"Cumplimiento","privacy-title":"Privacy Policy por app","privacy-body":"Cada app de Waysider tiene su propia política de privacidad, compatible con Google Play Store y AdMob. Siempre legible, siempre honesta.","privacy-link":"Ver política de privacidad",
+        "cta-label":"¿Tenés feedback?","cta-title":"Contactame.","cta-body":"Si tenés feedback sobre alguna app, una sugerencia, o simplemente querés decir hola — me llegará directamente a mí.","cta-btn-primary":"Escribir mensaje","cta-btn-secondary":"Ver todo el trabajo",
+        "footer-desc":"Herramientas y proyectos para la vida cotidiana. Simples, enfocados, bien hechos.","footer-tagline":"Sin rodeos.",
+        "footer-col-apps":"Apps","footer-all-apps":"Ver todas","footer-privacy":"Política de privacidad",
+        "footer-col-site":"Sitio","footer-work":"Trabajo","footer-about":"Sobre mí","footer-contact":"Contacto",
+        "footer-copy":"© 2025 Waysider Studio. Todos los derechos reservados.","footer-made":"Hecho con cuidado · Independiente",
+      }
+    };
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.dataset.i18n; if (t[k] !== undefined) el.textContent = t[k]; });
+    if (lang === 'es') document.documentElement.lang = 'es';
   </script>
-  -->
 
 </body>
 </html>
