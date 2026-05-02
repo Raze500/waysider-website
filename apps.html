@@ -78,18 +78,16 @@
   <section class="pb-24 px-6">
     <div class="max-w-4xl mx-auto flex flex-col gap-8">
 
-      <!-- Audio Player -->
+      <!-- Ember Music Player -->
       <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
         <div class="p-8 md:p-10">
           <div class="flex flex-col md:flex-row md:items-start gap-6">
-            <div class="w-16 h-16 bg-violet-950/60 border border-violet-800/40 rounded-2xl flex items-center justify-center flex-shrink-0">
-              <svg class="w-8 h-8 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-              </svg>
+            <div class="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0">
+              <img src="image.jpg" alt="Ember Music Player icon" class="w-full h-full object-cover">
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-3 mb-2">
-                <h2 class="text-2xl font-bold">Audio Player</h2>
+                <h2 class="text-2xl font-bold">Ember Music Player</h2>
                 <span class="text-xs bg-amber-950/60 border border-amber-800/50 text-amber-400 px-2.5 py-1 rounded-full font-medium">Coming soon</span>
               </div>
               <p class="text-zinc-400 text-lg leading-relaxed mb-6">
@@ -99,32 +97,32 @@
               <!-- Features -->
               <div class="grid sm:grid-cols-2 gap-3 mb-8">
                 <div class="flex items-start gap-3">
-                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div class="w-5 h-5 bg-amber-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                     </svg>
                   </div>
                   <span class="text-zinc-400 text-sm">Plays local audio files (MP3, FLAC, WAV, OGG)</span>
                 </div>
                 <div class="flex items-start gap-3">
-                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div class="w-5 h-5 bg-amber-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                     </svg>
                   </div>
                   <span class="text-zinc-400 text-sm">Works completely offline</span>
                 </div>
                 <div class="flex items-start gap-3">
-                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div class="w-5 h-5 bg-amber-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                     </svg>
                   </div>
                   <span class="text-zinc-400 text-sm">Clean interface, no clutter</span>
                 </div>
                 <div class="flex items-start gap-3">
-                  <div class="w-5 h-5 bg-violet-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div class="w-5 h-5 bg-amber-950/60 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                     </svg>
                   </div>
@@ -132,12 +130,20 @@
                 </div>
               </div>
 
-              <button disabled class="flex items-center gap-2 border border-zinc-700 text-zinc-500 px-6 py-3 rounded-xl text-sm font-medium cursor-not-allowed">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3.18 23.76c.35.2.74.24 1.1.14l12.76-7.37-3.15-3.15L3.18 23.76zm17.69-10.29c.31-.26.63-.7.63-1.47s-.32-1.21-.63-1.47l-2.36-1.36-3.35 3.35 3.35 3.35 2.36-1.4zM4.28.1C3.92 0 3.53.04 3.18.24L13.69 10.75l3.15-3.15L4.28.1zM2.2 1.4C2.08 1.67 2 1.98 2 2.34v19.32c0 .36.08.67.2.94l.08.08 10.82-10.82v-.26L2.28 1.32 2.2 1.4z"/>
-                </svg>
-                Available soon on Google Play
-              </button>
+              <div class="flex flex-wrap gap-3">
+                <button disabled class="flex items-center gap-2 border border-zinc-700 text-zinc-500 px-6 py-3 rounded-xl text-sm font-medium cursor-not-allowed">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3.18 23.76c.35.2.74.24 1.1.14l12.76-7.37-3.15-3.15L3.18 23.76zm17.69-10.29c.31-.26.63-.7.63-1.47s-.32-1.21-.63-1.47l-2.36-1.36-3.35 3.35 3.35 3.35 2.36-1.4zM4.28.1C3.92 0 3.53.04 3.18.24L13.69 10.75l3.15-3.15L4.28.1zM2.2 1.4C2.08 1.67 2 1.98 2 2.34v19.32c0 .36.08.67.2.94l.08.08 10.82-10.82v-.26L2.28 1.32 2.2 1.4z"/>
+                  </svg>
+                  Available soon on Google Play
+                </button>
+                <a href="https://waysiderstudio.com/privacy/audio-player.html" class="flex items-center gap-2 border border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:border-zinc-500 px-6 py-3 rounded-xl text-sm font-medium transition">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                  </svg>
+                  Privacy Policy
+                </a>
+              </div>
             </div>
           </div>
         </div>
