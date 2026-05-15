@@ -20,6 +20,9 @@
 
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -454,6 +457,167 @@
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
     // Page is English-first. Non-English browsers will be offered the browser's built-in translation.
+  </script>
+
+  <!-- GSAP Animations -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── Hero entrance timeline ──────────────────────────────────────
+    const heroTl = gsap.timeline({ delay: 0.1 });
+    heroTl
+      .from('#navbar', { y: -60, opacity: 0, duration: 0.7, ease: 'power3.out' })
+      .from('.animate-float', { y: -30, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.3');
+
+    // ── Mint glow pulse on hero SVG ────────────────────────────────
+    gsap.to('#glow25 feGaussianBlur', {
+      attr: { stdDeviation: 35 },
+      duration: 3,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut'
+    });
+
+    // ── ScrollTrigger section reveals (replaces IntersectionObserver) ──
+    gsap.utils.toArray('.reveal').forEach((el, i) => {
+      const parent = el.closest('.rg');
+      const siblings = parent ? [...parent.querySelectorAll('.reveal')] : [el];
+      const idx = siblings.indexOf(el);
+
+      gsap.fromTo(el,
+        { opacity: 0, y: 32, filter: 'blur(4px)' },
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 0.75,
+          delay: idx * 0.11,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none none',
+            once: true
+          }
+        }
+      );
+    });
+
+    // ── Counter animation for stats ────────────────────────────────
+    const counters = [
+      { el: document.querySelector('[data-i18n="stat-focus"]')?.previousElementSibling, target: 1, suffix: '' },
+    ];
+    // 8+ counter
+    const statEl = document.querySelector('[style*="color:#5ed29c;"] .font-inter.font-bold.text-4xl');
+    if (statEl && statEl.textContent.includes('8')) {
+      ScrollTrigger.create({
+        trigger: statEl,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          let count = { val: 0 };
+          gsap.to(count, {
+            val: 8,
+            duration: 1.5,
+            ease: 'power2.out',
+            onUpdate: () => { statEl.textContent = Math.round(count.val) + '+'; }
+          });
+        }
+      });
+    }
+
+    // ── Magnetic hover on primary buttons ─────────────────────────
+    document.querySelectorAll('a[href="work.html"].bg-\\[\\#5ed29c\\], a[href="contact.html"].bg-\\[\\#5ed29c\\]').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        gsap.to(btn, { x: x * 0.18, y: y * 0.18, duration: 0.3, ease: 'power2.out' });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.5)' });
+      });
+    });
+
+    // ── Card hover tilt effect ─────────────────────────────────────
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        gsap.to(card, {
+          rotateY: x * 6,
+          rotateX: -y * 6,
+          transformPerspective: 800,
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.6, ease: 'elastic.out(1,0.5)' });
+      });
+    });
+
+    // ── CTA section glow breathe ───────────────────────────────────
+    const ctaGlow = document.querySelector('#cta .absolute.rounded-full');
+    if (ctaGlow) {
+      gsap.to(ctaGlow, {
+        scale: 1.15,
+        opacity: 0.9,
+        duration: 3,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+      });
+    }
+
+    // ── Marquee speed up on hover ──────────────────────────────────
+    const marqueeTrack = document.querySelector('.marquee-track');
+    if (marqueeTrack) {
+      document.querySelector('.marquee-wrap')?.addEventListener('mouseenter', () => {
+        gsap.to(marqueeTrack, { timeScale: 0, duration: 0.5 });
+      });
+    }
+
+    // ── Parallax hero vertical lines on scroll ────────────────────
+    gsap.to('.hidden.lg\\:block .absolute.inset-y-0', {
+      y: -60,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: 'body',
+        start: 'top top',
+        end: '+=600',
+        scrub: true
+      }
+    });
+
+    // ── Section headings split word reveal ────────────────────────
+    document.querySelectorAll('h2 .font-inter, h1 .font-inter').forEach(heading => {
+      ScrollTrigger.create({
+        trigger: heading,
+        start: 'top 90%',
+        once: true,
+        onEnter: () => {
+          gsap.fromTo(heading,
+            { backgroundSize: '0% 2px' },
+            { backgroundSize: '100% 2px', duration: 0.8, ease: 'power2.inOut' }
+          );
+        }
+      });
+    });
+
+    // ── Logo bounce on load ───────────────────────────────────────
+    gsap.from('#navbar svg', {
+      scale: 0,
+      rotation: -30,
+      opacity: 0,
+      duration: 0.8,
+      delay: 0.2,
+      ease: 'back.out(1.7)'
+    });
+
+    // ── Refresh ScrollTrigger after fonts load ────────────────────
+    window.addEventListener('load', () => ScrollTrigger.refresh());
   </script>
 
 </body>
