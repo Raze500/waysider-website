@@ -571,11 +571,14 @@
     // a uniform grid inside an SS14 paper (which otherwise uses the
     // proportional NotoSans font and would distort the art).
     //
-    // Paper width is 600 px in SS14. NotoSansMono advance ≈ 0.55 × size,
-    // so max chars per line ≈ floor(600 / (size × 0.55)).  Anything wider
-    // gets soft-wrapped by the paper UI and destroys the grid.
-    const SS14_PAPER_PX = 600;
-    const SS14_CHAR_RATIO = 0.55;
+    // Paper UI is 600 px wide but PaperDefaultBorder applies a 16 px patch
+    // margin per side (StyleNano paperBackground.SetPatchMargin), so the
+    // usable text area is ~568 px.  NotoSansMono Regular has an advance of
+    // about 0.6 × size; we use 0.65 conservatively to leave a 1-char safety
+    // margin and avoid the paper soft-wrapping our lines (which destroys
+    // the ASCII grid).
+    const SS14_PAPER_PX = 568;
+    const SS14_CHAR_RATIO = 0.65;
 
     function ss14MaxChars(size) {
       return Math.floor(SS14_PAPER_PX / (size * SS14_CHAR_RATIO));
