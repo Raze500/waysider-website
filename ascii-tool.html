@@ -70,6 +70,9 @@
       transition:border-color 0.2s;
     }
     select:focus, input[type=number]:focus { border-color:rgba(94,210,156,0.4); }
+    /* Native dropdown panel uses OS colors by default — force dark to match the theme */
+    select option { background:#0e1413; color:#fff; padding:6px; }
+    select option:checked { background:#5ed29c; color:#070b0a; }
     input[type=color] { width:32px; height:28px; border:1px solid rgba(255,255,255,0.1); border-radius:8px; background:none; cursor:pointer; padding:2px; }
 
     /* Buttons */
@@ -307,8 +310,14 @@
 
           <div class="flex items-center gap-2 ml-auto flex-wrap">
             <div class="flex items-center gap-2 mr-2 pr-3 border-r border-white/10">
-              <span class="text-xs text-white/30 uppercase tracking-widest font-jakarta">SS14 size</span>
-              <input type="number" id="ss14Size" value="10" min="6" max="20" style="width:56px;">
+              <div class="flex flex-col gap-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-white/30 uppercase tracking-widest font-jakarta">SS14 size</span>
+                  <input type="number" id="ss14Size" value="10" min="6" max="20" style="width:56px;">
+                  <button id="fitSs14" class="ctrl-btn" title="Resize width to fit SS14 paper exactly">Fit</button>
+                </div>
+                <span id="ss14Hint" class="text-[10px]" style="color:rgba(255,255,255,0.3);">paper fits ~109 chars wide</span>
+              </div>
             </div>
             <button id="dlPng" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#5ed29c] text-[#070b0a] text-xs font-bold uppercase tracking-wider hover:brightness-110 active:scale-[0.97] transition-all">
               ↓ PNG
@@ -530,7 +539,11 @@
     function render() {
       if (!S.image) return;
       clearTimeout(_t);
-      _t = setTimeout(() => { S.rows = toAscii(S.image); drawAscii(); }, 60);
+      _t = setTimeout(() => {
+        S.rows = toAscii(S.image);
+        drawAscii();
+        updateSs14Hint();
+      }, 60);
     }
 
     // ── EXPORTS ──────────────────────────────────────────────────────
@@ -557,11 +570,54 @@
     // Wraps the ASCII in [font=Monospace size=N]…[/font] so it renders on
     // a uniform grid inside an SS14 paper (which otherwise uses the
     // proportional NotoSans font and would distort the art).
+    //
+    // Paper width is 600 px in SS14. NotoSansMono advance ≈ 0.55 × size,
+    // so max chars per line ≈ floor(600 / (size × 0.55)).  Anything wider
+    // gets soft-wrapped by the paper UI and destroys the grid.
+    const SS14_PAPER_PX = 600;
+    const SS14_CHAR_RATIO = 0.55;
+
+    function ss14MaxChars(size) {
+      return Math.floor(SS14_PAPER_PX / (size * SS14_CHAR_RATIO));
+    }
+
+    function getSs14Size() {
+      return Math.max(6, Math.min(20, parseInt(document.getElementById('ss14Size').value) || 10));
+    }
+
     function buildSs14Text() {
-      const size = Math.max(6, Math.min(20, parseInt(document.getElementById('ss14Size').value) || 10));
+      const size = getSs14Size();
       const body = S.rows.map(r => r.map(c => c.ch).join('')).join('\n');
       return `[font="Monospace" size=${size}]\n${body}\n[/font]`;
     }
+
+    function updateSs14Hint() {
+      const size = getSs14Size();
+      const max  = ss14MaxChars(size);
+      const cur  = S.width;
+      const hint = document.getElementById('ss14Hint');
+      if (!hint) return;
+
+      if (cur > max) {
+        hint.textContent = `⚠ ${cur} chars > ${max} max — paper will wrap. Click "Fit" or lower width.`;
+        hint.style.color = '#ff7a7a';
+      } else {
+        hint.textContent = `paper fits ${max} chars at size ${size} (you're at ${cur})`;
+        hint.style.color = 'rgba(255,255,255,0.3)';
+      }
+    }
+
+    // Update hint when SS14 size changes
+    document.getElementById('ss14Size').addEventListener('input', updateSs14Hint);
+
+    // "Fit" button: snap the width slider down to whatever fits the paper.
+    document.getElementById('fitSs14').addEventListener('click', () => {
+      const max = ss14MaxChars(getSs14Size());
+      const slider = document.getElementById('widthSlider');
+      const newW = Math.min(max, parseInt(slider.max));
+      slider.value = newW;
+      slider.dispatchEvent(new Event('input'));
+    });
 
     document.getElementById('dlSs14').addEventListener('click', () => {
       if (!S.rows.length) return;
