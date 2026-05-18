@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Instrument+Serif:ital@1&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind config MUST precede the CDN script so custom keyframes are available on first parse -->
+  <!-- Tailwind: only font families — no custom keyframes (animations live in the <style> block below) -->
   <script>
     tailwind.config = {
       theme: {
@@ -27,18 +27,6 @@
             inter:   ["Inter", "sans-serif"],
             jakarta: ["Plus Jakarta Sans", "sans-serif"],
             serif:   ["Instrument Serif", "serif"],
-          },
-          keyframes: {
-            "fade-up": { "0%": { opacity:"0", transform:"translateY(20px)", filter:"blur(4px)" }, "100%": { opacity:"1", transform:"translateY(0)", filter:"blur(0)" } },
-            "fade-in": { "0%": { opacity:"0" }, "100%": { opacity:"1" } },
-            float:     { "0%,100%": { transform:"translateY(0)" }, "50%": { transform:"translateY(-14px)" } },
-            marquee:   { "0%": { transform:"translateX(0)" }, "100%": { transform:"translateX(-50%)" } },
-          },
-          animation: {
-            "fade-up": "fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards",
-            "fade-in": "fade-in 0.5s ease-out forwards",
-            "float":   "float 6s ease-in-out infinite",
-            marquee:   "marquee 30s linear infinite",
           },
         },
       },
@@ -53,6 +41,29 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    /* ── Keyframes — defined in raw CSS, never via Tailwind CDN ───── */
+    @keyframes fade-up {
+      0%   { opacity:0; transform:translateY(20px); filter:blur(4px); }
+      100% { opacity:1; transform:translateY(0);    filter:blur(0);   }
+    }
+    @keyframes fade-in {
+      0%   { opacity:0; }
+      100% { opacity:1; }
+    }
+    @keyframes float {
+      0%,100% { transform:translateY(0);     }
+      50%     { transform:translateY(-14px); }
+    }
+    @keyframes marquee {
+      0%   { transform:translateX(0);    }
+      100% { transform:translateX(-50%); }
+    }
+    /* fill-mode: both = stays at FROM during delay, stays at TO after finish */
+    .animate-fade-up  { animation: fade-up  0.7s cubic-bezier(0.16,1,0.3,1) both; }
+    .animate-fade-in  { animation: fade-in  0.5s ease-out both; }
+    .animate-float    { animation: float    6s   ease-in-out infinite; }
+    .animate-marquee  { animation: marquee  30s  linear    infinite; }
+
     body { font-family:"Inter",sans-serif; background:#070b0a; color:#fff; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
     body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity:0.02; pointer-events:none; z-index:9999; }
     .glass-card { background:rgba(255,255,255,0.01); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); box-shadow:inset 0 1px 1px rgba(255,255,255,0.1); position:relative; }
@@ -143,7 +154,7 @@
     </svg>
 
     <div class="relative flex flex-col items-center text-center px-6 max-w-4xl mx-auto" style="z-index:10;">
-      <div class="glass-card rounded-2xl p-5 w-[200px] animate-float opacity-0 animate-fade-in"
+      <div class="glass-card rounded-2xl p-5 w-[200px] animate-float animate-fade-in"
            style="height:200px; transform:translateY(-50px); margin-bottom:-50px; animation-delay:0.1s;">
         <div class="flex flex-col justify-center h-full gap-2">
           <span class="text-[11px] text-white/40 font-mono tracking-widest">[ 2025 ]</span>
@@ -155,18 +166,18 @@
         </div>
       </div>
 
-      <p class="opacity-0 animate-fade-up font-jakarta font-bold text-[11px] text-[#5ed29c] uppercase tracking-widest mb-4" style="animation-delay:0.2s;" data-i18n="hero-eyebrow">Independent Developer · Android & Web · Digital Books</p>
+      <p class="animate-fade-up font-jakarta font-bold text-[11px] text-[#5ed29c] uppercase tracking-widest mb-4" style="animation-delay:0.2s;" data-i18n="hero-eyebrow">Independent Developer · Android & Web · Digital Books</p>
 
-      <h1 class="opacity-0 animate-fade-up font-inter font-extrabold uppercase tracking-tight text-white leading-[1.02] mb-6"
+      <h1 class="animate-fade-up font-inter font-extrabold uppercase tracking-tight text-white leading-[1.02] mb-6"
           style="font-size:clamp(2.5rem,8vw,4.5rem); animation-delay:0.35s;">
         <span data-i18n="hero-headline">WITHOUT SHORTCUTS</span><span style="color:#5ed29c;">.</span>
       </h1>
 
-      <p class="opacity-0 animate-fade-up text-[14px] text-white/70 max-w-[512px] mb-8 leading-relaxed" style="animation-delay:0.5s;" data-i18n="hero-description">
+      <p class="animate-fade-up text-[14px] text-white/70 max-w-[512px] mb-8 leading-relaxed" style="animation-delay:0.5s;" data-i18n="hero-description">
         Tools and projects for everyday life. No bloat, no filler features. One thing, done right, that looks good doing it.
       </p>
 
-      <div class="opacity-0 animate-fade-up flex flex-wrap gap-3 justify-center" style="animation-delay:0.65s;">
+      <div class="animate-fade-up flex flex-wrap gap-3 justify-center" style="animation-delay:0.65s;">
         <a href="work.html" class="flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#5ed29c] text-[#070b0a] text-sm font-bold uppercase tracking-wider hover:brightness-110 active:scale-[0.97] transition-all" data-i18n="hero-cta-primary">
           View my work
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
@@ -174,7 +185,7 @@
         <a href="about.html" class="flex items-center px-7 py-3.5 rounded-full border text-white text-sm font-medium uppercase tracking-wider hover:border-white/40 active:scale-[0.97] transition-all" style="border-color:rgba(255,255,255,0.15);" data-i18n="hero-cta-secondary">About me</a>
       </div>
 
-      <p class="opacity-0 animate-fade-up text-xs font-light mt-6" style="color:rgba(255,255,255,0.3); animation-delay:0.8s;" data-i18n="hero-trust">
+      <p class="animate-fade-up text-xs font-light mt-6" style="color:rgba(255,255,255,0.3); animation-delay:0.8s;" data-i18n="hero-trust">
         Made with care · Android · No dark patterns · Privacy-first
       </p>
     </div>
