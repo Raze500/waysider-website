@@ -588,7 +588,10 @@
     function buildSs14Text() {
       const size = getSs14Size();
       const body = S.rows.map(r => r.map(c => c.ch).join('')).join('\n');
-      return `[font="Monospace" size=${size}]\n${body}\n[/font]`;
+      // SS14 paper whitelists [mono] but NOT [font=...].  MonoTag uses the
+      // "Monospace" font prototype and supports a `size` attribute through
+      // FontTag.CreateFont, so this is the right way to force fixed-width.
+      return `[mono size=${size}]\n${body}\n[/mono]`;
     }
 
     function updateSs14Hint() {
