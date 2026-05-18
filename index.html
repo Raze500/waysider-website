@@ -41,14 +41,10 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    /* ── Keyframes — defined in raw CSS, never via Tailwind CDN ───── */
-    @keyframes fade-up {
-      0%   { opacity:0; transform:translateY(20px); filter:blur(4px); }
-      100% { opacity:1; transform:translateY(0);    filter:blur(0);   }
-    }
-    @keyframes fade-in {
-      0%   { opacity:0; }
-      100% { opacity:1; }
+    /* ── Keyframes — raw CSS only, zero Tailwind CDN dependency ────── */
+    @keyframes nav-drop {
+      0%   { opacity:0; transform:translateY(-16px); }
+      100% { opacity:1; transform:translateY(0);     }
     }
     @keyframes float {
       0%,100% { transform:translateY(0);     }
@@ -58,19 +54,22 @@
       0%   { transform:translateX(0);    }
       100% { transform:translateX(-50%); }
     }
-    /* fill-mode: both = stays at FROM during delay, stays at TO after finish */
-    .animate-fade-up  { animation: fade-up  0.7s cubic-bezier(0.16,1,0.3,1) both; }
-    .animate-fade-in  { animation: fade-in  0.5s ease-out both; }
-    .animate-float    { animation: float    6s   ease-in-out infinite; }
-    .animate-marquee  { animation: marquee  30s  linear    infinite; }
+    /* Navbar: always fires via CSS — no GSAP opacity risk */
+    #navbar { animation: nav-drop 0.55s cubic-bezier(0.16,1,0.3,1) both; }
+    /* Hero elements: hidden until GSAP animates them in */
+    .hero-el { opacity: 0; }
+    .animate-float   { animation: float   6s  ease-in-out infinite; }
+    .animate-marquee { animation: marquee 30s linear     infinite; }
 
     body { font-family:"Inter",sans-serif; background:#070b0a; color:#fff; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
     body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity:0.02; pointer-events:none; z-index:9999; }
     .glass-card { background:rgba(255,255,255,0.01); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); box-shadow:inset 0 1px 1px rgba(255,255,255,0.1); position:relative; }
     .glass-card::before { content:''; position:absolute; inset:0; padding:1.4px; border-radius:inherit; background:linear-gradient(180deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.04) 100%); -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; }
-    #navbar { transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),background 0.3s ease; }
+    /* transition applies AFTER the nav-drop animation finishes */
+    #navbar { transition:background 0.3s ease; }
     #navbar.scrolled { background:rgba(7,11,10,0.9); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,0.07); }
-    #navbar.nav-hidden { transform:translateY(-100%); }
+    /* nav-hidden uses transform but we animate it via JS class toggle */
+    #navbar.nav-hidden { transform:translateY(-100%); animation:none; transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),background 0.3s ease; }
     #mobile-menu { transform:translateX(100%); transition:transform 0.35s cubic-bezier(0.16,1,0.3,1); }
     #mobile-menu.open { transform:translateX(0); }
     #mobile-backdrop { opacity:0; pointer-events:none; transition:opacity 0.25s ease; }
@@ -154,8 +153,8 @@
     </svg>
 
     <div class="relative flex flex-col items-center text-center px-6 max-w-4xl mx-auto" style="z-index:10;">
-      <div class="glass-card rounded-2xl p-5 w-[200px] animate-float animate-fade-in"
-           style="height:200px; transform:translateY(-50px); margin-bottom:-50px; animation-delay:0.1s;">
+      <div class="glass-card rounded-2xl p-5 w-[200px] animate-float hero-el"
+           style="height:200px; position:relative; top:-50px; margin-bottom:-50px;">
         <div class="flex flex-col justify-center h-full gap-2">
           <span class="text-[11px] text-white/40 font-mono tracking-widest">[ 2025 ]</span>
           <p class="text-[15px] font-semibold text-white leading-snug">
@@ -166,18 +165,18 @@
         </div>
       </div>
 
-      <p class="animate-fade-up font-jakarta font-bold text-[11px] text-[#5ed29c] uppercase tracking-widest mb-4" style="animation-delay:0.2s;" data-i18n="hero-eyebrow">Independent Developer · Android & Web · Digital Books</p>
+      <p class="hero-el font-jakarta font-bold text-[11px] text-[#5ed29c] uppercase tracking-widest mb-4" style="animation-delay:0.2s;" data-i18n="hero-eyebrow">Independent Developer · Android & Web · Digital Books</p>
 
-      <h1 class="animate-fade-up font-inter font-extrabold uppercase tracking-tight text-white leading-[1.02] mb-6"
+      <h1 class="hero-el font-inter font-extrabold uppercase tracking-tight text-white leading-[1.02] mb-6"
           style="font-size:clamp(2.5rem,8vw,4.5rem); animation-delay:0.35s;">
         <span data-i18n="hero-headline">WITHOUT SHORTCUTS</span><span style="color:#5ed29c;">.</span>
       </h1>
 
-      <p class="animate-fade-up text-[14px] text-white/70 max-w-[512px] mb-8 leading-relaxed" style="animation-delay:0.5s;" data-i18n="hero-description">
+      <p class="hero-el text-[14px] text-white/70 max-w-[512px] mb-8 leading-relaxed" style="animation-delay:0.5s;" data-i18n="hero-description">
         Tools and projects for everyday life. No bloat, no filler features. One thing, done right, that looks good doing it.
       </p>
 
-      <div class="animate-fade-up flex flex-wrap gap-3 justify-center" style="animation-delay:0.65s;">
+      <div class="hero-el flex flex-wrap gap-3 justify-center" style="animation-delay:0.65s;">
         <a href="work.html" class="flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#5ed29c] text-[#070b0a] text-sm font-bold uppercase tracking-wider hover:brightness-110 active:scale-[0.97] transition-all" data-i18n="hero-cta-primary">
           View my work
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
@@ -185,7 +184,7 @@
         <a href="about.html" class="flex items-center px-7 py-3.5 rounded-full border text-white text-sm font-medium uppercase tracking-wider hover:border-white/40 active:scale-[0.97] transition-all" style="border-color:rgba(255,255,255,0.15);" data-i18n="hero-cta-secondary">About me</a>
       </div>
 
-      <p class="animate-fade-up text-xs font-light mt-6" style="color:rgba(255,255,255,0.3); animation-delay:0.8s;" data-i18n="hero-trust">
+      <p class="hero-el text-xs font-light mt-6" style="color:rgba(255,255,255,0.3); animation-delay:0.8s;" data-i18n="hero-trust">
         Made with care · Android · No dark patterns · Privacy-first
       </p>
     </div>
@@ -477,10 +476,6 @@
     toggle.addEventListener('click', openMenu); closeBtn.addEventListener('click', closeMenu); backdrop.addEventListener('click', closeMenu);
     document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMenu));
 
-    // Scroll reveal
-    const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }), { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
     // Page is English-first. Non-English browsers will be offered the browser's built-in translation.
   </script>
 
@@ -488,23 +483,30 @@
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    // ── Hero entrance timeline ──────────────────────────────────────
-    const heroTl = gsap.timeline({ delay: 0.1 });
-    heroTl
-      .from('#navbar', { y: -60, opacity: 0, duration: 0.7, ease: 'power3.out' })
-      .from('.animate-float', { y: -30, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.3');
+    // ── Hero: GSAP-only, bfcache-safe ──────────────────────────────
+    // Set starting transform values (opacity already 0 via CSS .hero-el)
+    gsap.set('.hero-el', { y: 18, filter: 'blur(5px)' });
 
-    // ── Mint glow pulse on hero SVG ────────────────────────────────
-    gsap.to('#glow25 feGaussianBlur', {
-      attr: { stdDeviation: 35 },
-      duration: 3,
-      yoyo: true,
-      repeat: -1,
-      ease: 'sine.inOut'
+    function animateHeroIn() {
+      gsap.to('.hero-el', {
+        opacity: 1, y: 0, filter: 'blur(0px)',
+        duration: 0.72, stagger: 0.13, ease: 'power3.out',
+        delay: 0.25,
+        clearProps: 'filter'
+      });
+    }
+    animateHeroIn();
+
+    // bfcache restore: browser back/refresh restores cached page state,
+    // GSAP tweens don't re-run — force everything visible instantly
+    window.addEventListener('pageshow', e => {
+      if (e.persisted) {
+        gsap.set('.hero-el', { opacity: 1, y: 0, filter: 'none', clearProps: 'all' });
+      }
     });
 
-    // ── ScrollTrigger section reveals (replaces IntersectionObserver) ──
-    gsap.utils.toArray('.reveal').forEach((el, i) => {
+    // ── ScrollTrigger section reveals ─────────────────────────────
+    gsap.utils.toArray('.reveal').forEach(el => {
       const parent = el.closest('.rg');
       const siblings = parent ? [...parent.querySelectorAll('.reveal')] : [el];
       const idx = siblings.indexOf(el);
@@ -512,12 +514,11 @@
       gsap.fromTo(el,
         { opacity: 0, y: 32, filter: 'blur(4px)' },
         {
-          opacity: 1,
-          y: 0,
-          filter: 'blur(0px)',
+          opacity: 1, y: 0, filter: 'blur(0px)',
           duration: 0.75,
           delay: idx * 0.11,
           ease: 'power3.out',
+          clearProps: 'filter',
           scrollTrigger: {
             trigger: el,
             start: 'top 88%',
@@ -629,16 +630,6 @@
           );
         }
       });
-    });
-
-    // ── Logo bounce on load ───────────────────────────────────────
-    gsap.from('#navbar svg', {
-      scale: 0,
-      rotation: -30,
-      opacity: 0,
-      duration: 0.8,
-      delay: 0.2,
-      ease: 'back.out(1.7)'
     });
 
     // ── Refresh ScrollTrigger after fonts load ────────────────────
