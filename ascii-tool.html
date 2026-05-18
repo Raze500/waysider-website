@@ -305,12 +305,18 @@
             <button class="ctrl-btn" data-scale="6">6×</button>
           </div>
 
-          <div class="flex gap-2 ml-auto">
+          <div class="flex items-center gap-2 ml-auto flex-wrap">
+            <div class="flex items-center gap-2 mr-2 pr-3 border-r border-white/10">
+              <span class="text-xs text-white/30 uppercase tracking-widest font-jakarta">SS14 size</span>
+              <input type="number" id="ss14Size" value="10" min="6" max="20" style="width:56px;">
+            </div>
             <button id="dlPng" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#5ed29c] text-[#070b0a] text-xs font-bold uppercase tracking-wider hover:brightness-110 active:scale-[0.97] transition-all">
               ↓ PNG
             </button>
             <button id="dlSvg" class="ctrl-btn">↓ SVG</button>
             <button id="dlTxt" class="ctrl-btn">↓ TXT</button>
+            <button id="dlSs14" class="ctrl-btn" title="Download text wrapped in [font=Monospace] for SS14 paper">↓ SS14</button>
+            <button id="copySs14" class="ctrl-btn" title="Copy to clipboard, wrapped in [font=Monospace] for SS14 paper">📋 Copy SS14</button>
           </div>
 
         </div></div>
@@ -545,6 +551,40 @@
       a.href     = URL.createObjectURL(blob);
       a.click();
       URL.revokeObjectURL(a.href);
+    });
+
+    // ── SS14 PAPER EXPORT ────────────────────────────────────────────
+    // Wraps the ASCII in [font=Monospace size=N]…[/font] so it renders on
+    // a uniform grid inside an SS14 paper (which otherwise uses the
+    // proportional NotoSans font and would distort the art).
+    function buildSs14Text() {
+      const size = Math.max(6, Math.min(20, parseInt(document.getElementById('ss14Size').value) || 10));
+      const body = S.rows.map(r => r.map(c => c.ch).join('')).join('\n');
+      return `[font="Monospace" size=${size}]\n${body}\n[/font]`;
+    }
+
+    document.getElementById('dlSs14').addEventListener('click', () => {
+      if (!S.rows.length) return;
+      const blob = new Blob([buildSs14Text()], {type:'text/plain'});
+      const a    = document.createElement('a');
+      a.download = 'ascii-ss14.txt';
+      a.href     = URL.createObjectURL(blob);
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    document.getElementById('copySs14').addEventListener('click', async () => {
+      if (!S.rows.length) return;
+      const btn = document.getElementById('copySs14');
+      const original = btn.textContent;
+      try {
+        await navigator.clipboard.writeText(buildSs14Text());
+        btn.textContent = '✓ Copied!';
+        btn.classList.add('active');
+      } catch {
+        btn.textContent = '✗ Failed';
+      }
+      setTimeout(() => { btn.textContent = original; btn.classList.remove('active'); }, 1600);
     });
 
     document.getElementById('dlSvg').addEventListener('click', () => {
