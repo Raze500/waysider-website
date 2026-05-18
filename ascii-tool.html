@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASCII Art Generator — Waysider</title>
+  <meta name="description" content="Convert any image to ASCII art. Runs entirely in your browser — nothing uploaded, nothing stored." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Instrument+Serif:ital@1&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            inter:   ["Inter", "sans-serif"],
+            jakarta: ["Plus Jakarta Sans", "sans-serif"],
+            serif:   ["Instrument Serif", "serif"],
+          },
+          keyframes: {
+            "fade-up": { "0%": { opacity:"0", transform:"translateY(20px)", filter:"blur(4px)" }, "100%": { opacity:"1", transform:"translateY(0)", filter:"blur(0)" } },
+          },
+          animation: {
+            "fade-up": "fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:"Inter",sans-serif; background:#070b0a; color:#fff; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+    body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity:0.02; pointer-events:none; z-index:9999; }
+
+    /* Navbar */
+    #navbar { transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),background 0.3s ease; }
+    #navbar.scrolled { background:rgba(7,11,10,0.9); backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,0.07); }
+    .nav-link { position:relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:100%; height:1px; background:#5ed29c; transform:scaleX(0); transform-origin:left; transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .nav-link:hover { color:#5ed29c; }
+    .nav-link:hover::after { transform:scaleX(1); }
+
+    /* Cards */
+    .card { background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.08); border-radius:20px; }
+    .card-inner { background:rgba(7,11,10,0.6); border-radius:14px; box-shadow:inset 0 1px 1px rgba(255,255,255,0.03); }
+
+    /* Controls */
+    input[type=range] {
+      -webkit-appearance:none; width:100%; height:3px;
+      background:#1e2420; border-radius:2px; outline:none; cursor:pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance:none; width:14px; height:14px;
+      border-radius:50%; background:#5ed29c; cursor:pointer;
+      box-shadow:0 0 0 3px rgba(94,210,156,0.15);
+    }
+    input[type=range]:focus::-webkit-slider-thumb { box-shadow:0 0 0 4px rgba(94,210,156,0.25); }
+
+    select, input[type=number] {
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+      color:#fff; border-radius:10px; padding:8px 12px; font-size:12px;
+      width:100%; outline:none; font-family:inherit; cursor:pointer;
+      transition:border-color 0.2s;
+    }
+    select:focus, input[type=number]:focus { border-color:rgba(94,210,156,0.4); }
+    input[type=color] { width:32px; height:28px; border:1px solid rgba(255,255,255,0.1); border-radius:8px; background:none; cursor:pointer; padding:2px; }
+
+    /* Buttons */
+    .ctrl-btn {
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+      color:rgba(255,255,255,0.5); border-radius:8px; padding:6px 10px;
+      font-size:11px; font-weight:600; cursor:pointer; transition:all 0.15s;
+      font-family:inherit; white-space:nowrap;
+    }
+    .ctrl-btn:hover { border-color:rgba(94,210,156,0.3); color:#fff; }
+    .ctrl-btn.active { background:rgba(94,210,156,0.1); border-color:rgba(94,210,156,0.4); color:#5ed29c; }
+
+    /* Canvas */
+    #asciiCanvas { display:block; max-width:100%; image-rendering:pixelated; }
+
+    /* Section label */
+    .ctrl-label { font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:10px; font-family:"Plus Jakarta Sans",sans-serif; }
+    .val-label { font-size:11px; color:#5ed29c; font-weight:600; font-variant-numeric:tabular-nums; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-16 py-5">
+    <a href="/" class="flex items-center gap-3">
+      <svg width="30" height="30" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="112" x2="96" y2="112" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+        <line x1="96" y1="112" x2="163" y2="56" stroke="#5ed29c" stroke-width="11" stroke-linecap="round"/>
+        <circle cx="163" cy="56" r="10" fill="#5ed29c"/>
+      </svg>
+      <span class="font-inter font-semibold text-xl text-white tracking-tight">Waysider<span style="color:#5ed29c;">.</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="work.html"    class="nav-link text-sm text-white/70 uppercase tracking-widest transition-colors">Work</a>
+      <a href="index.html#apps" class="nav-link text-sm text-white/70 uppercase tracking-widest transition-colors">Apps</a>
+      <a href="about.html"   class="nav-link text-sm text-white/70 uppercase tracking-widest transition-colors">About</a>
+      <a href="contact.html" class="nav-link text-sm text-white/70 uppercase tracking-widest transition-colors">Contact</a>
+    </div>
+    <a href="work.html" class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#5ed29c] text-[#070b0a] text-xs font-bold uppercase tracking-wider hover:brightness-110 active:scale-[0.97] transition-all">View Work</a>
+  </nav>
+
+
+  <!-- HERO -->
+  <section class="pt-36 pb-16 px-6 md:px-12 lg:px-16 max-w-7xl mx-auto">
+    <div class="mb-3">
+      <span class="opacity-0 animate-fade-up inline-block text-xs font-jakarta font-bold text-[#5ed29c] uppercase tracking-widest" style="animation-delay:0.1s;">
+        Free Tool
+      </span>
+    </div>
+    <h1 class="opacity-0 animate-fade-up font-inter font-extrabold uppercase tracking-tight text-white leading-[1.02] mb-4" style="font-size:clamp(2.5rem,6vw,4rem); animation-delay:0.2s;">
+      ASCII Art<span style="color:#5ed29c;">.</span>
+    </h1>
+    <p class="opacity-0 animate-fade-up text-white/50 max-w-lg mb-2 leading-relaxed" style="animation-delay:0.35s;">
+      Convert any image to ASCII art. All processing runs in your browser — nothing uploaded, nothing stored.
+    </p>
+  </section>
+
+
+  <!-- DROP ZONE -->
+  <div class="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto mb-8">
+    <div id="dropZone" class="relative border border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-200"
+         style="border-color:rgba(255,255,255,0.1); background:rgba(255,255,255,0.01);">
+      <input type="file" id="fileInput" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+      <div class="text-3xl mb-3">🖼️</div>
+      <p class="text-sm font-semibold" style="color:#5ed29c;">Drop image or click to upload</p>
+      <p class="text-xs mt-1" style="color:rgba(255,255,255,0.2);">PNG · JPG · WEBP · GIF · SVG</p>
+    </div>
+  </div>
+
+
+  <!-- WORKSPACE -->
+  <div class="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto pb-32" id="workspace" style="display:none;">
+    <div class="grid grid-cols-1 xl:grid-cols-[280px_1fr] gap-6 items-start">
+
+      <!-- ── LEFT PANEL ── -->
+      <div class="flex flex-col gap-5">
+
+        <!-- Character Ramp -->
+        <div class="card"><div class="card-inner p-5">
+          <div class="ctrl-label">Character Ramp</div>
+          <div class="grid grid-cols-2 gap-2">
+            <button class="ctrl-btn active" data-ramp="standard">Standard</button>
+            <button class="ctrl-btn" data-ramp="blocks">Blocks</button>
+            <button class="ctrl-btn" data-ramp="detailed">Detailed</button>
+            <button class="ctrl-btn" data-ramp="minimal">Minimal</button>
+          </div>
+        </div></div>
+
+        <!-- Density & Size -->
+        <div class="card"><div class="card-inner p-5">
+          <div class="ctrl-label">Density & Size</div>
+          <div class="flex flex-col gap-4">
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs text-white/40">Width (chars)</span>
+                <span class="val-label" id="widthVal">120</span>
+              </div>
+              <input type="range" id="widthSlider" min="20" max="300" value="120">
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs text-white/40">Height scale</span>
+                <span class="val-label" id="hscaleVal">0.50</span>
+              </div>
+              <input type="range" id="hscaleSlider" min="10" max="200" value="50">
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs text-white/40">Density bias</span>
+                <span class="val-label" id="densityVal">1.00</span>
+              </div>
+              <input type="range" id="densitySlider" min="50" max="200" value="100">
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs text-white/40">Pixelate</span>
+                <span class="val-label" id="pixelateVal">0</span>
+              </div>
+              <input type="range" id="pixelateSlider" min="0" max="20" value="0">
+            </div>
+
+          </div>
+        </div></div>
+
+        <!-- Tonal -->
+        <div class="card"><div class="card-inner p-5">
+          <div class="ctrl-label">Tonal</div>
+          <div class="flex flex-col gap-4">
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs text-white/40">Brightness</span>
+                <span class="val-label" id="brightnessVal">0</span>
+              </div>
+              <input type="range" id="brightnessSlider" min="-100" max="100" value="0">
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs text-white/40">Contrast</span>
+                <span class="val-label" id="contrastVal">0</span>
+              </div>
+              <input type="range" id="contrastSlider" min="-100" max="100" value="0">
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs text-white/40">Gamma</span>
+                <span class="val-label" id="gammaVal">1.00</span>
+              </div>
+              <input type="range" id="gammaSlider" min="10" max="300" value="100">
+            </div>
+
+          </div>
+        </div></div>
+
+        <!-- Color & Background -->
+        <div class="card"><div class="card-inner p-5">
+          <div class="ctrl-label">Color Mode</div>
+          <div class="flex gap-2 mb-5">
+            <button class="ctrl-btn active" data-mode="mono">Mono</button>
+            <button class="ctrl-btn" data-mode="multi">Multi</button>
+            <button class="ctrl-btn" data-mode="original">Original</button>
+          </div>
+
+          <div class="ctrl-label">Background</div>
+          <div class="flex gap-2 mb-4">
+            <button class="ctrl-btn active" data-bg="transparent">Transparent</button>
+            <button class="ctrl-btn" data-bg="solid">Solid</button>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <div id="bgColorRow" class="flex items-center justify-between" style="display:none !important;">
+              <span class="text-xs text-white/40">BG color</span>
+              <input type="color" id="bgColor" value="#070b0a">
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-white/40">Text color</span>
+              <input type="color" id="fgColor" value="#5ed29c">
+            </div>
+          </div>
+        </div></div>
+
+        <!-- Blend & Font -->
+        <div class="card"><div class="card-inner p-5">
+          <div class="ctrl-label">Blend Mode</div>
+          <select id="blendMode" class="mb-4">
+            <option value="source-over">Normal</option>
+            <option value="multiply">Multiply</option>
+            <option value="screen">Screen</option>
+            <option value="overlay">Overlay</option>
+            <option value="darken">Darken</option>
+            <option value="lighten">Lighten</option>
+            <option value="color-dodge">Color Dodge</option>
+            <option value="color-burn">Color Burn</option>
+            <option value="soft-light">Soft Light</option>
+            <option value="hard-light">Hard Light</option>
+          </select>
+
+          <div class="ctrl-label">Font Size (px)</div>
+          <input type="number" id="fontSize" value="8" min="4" max="24">
+        </div></div>
+
+      </div>
+
+      <!-- ── RIGHT: PREVIEW + EXPORT ── -->
+      <div class="flex flex-col gap-4">
+
+        <!-- Canvas -->
+        <div class="card overflow-hidden" style="min-height:420px;">
+          <div class="card-inner p-4 flex items-center justify-center min-h-[420px]" id="canvasWrap">
+            <div id="emptyState" class="text-center">
+              <div class="text-4xl mb-3">🎨</div>
+              <p class="text-sm" style="color:rgba(255,255,255,0.2);">Upload an image to get started</p>
+            </div>
+            <canvas id="asciiCanvas" style="display:none; max-width:100%;"></canvas>
+          </div>
+        </div>
+
+        <!-- Export bar -->
+        <div class="card"><div class="card-inner p-4 flex flex-wrap items-center gap-3">
+
+          <span class="text-xs text-white/30 uppercase tracking-widest font-jakarta">Scale</span>
+          <div class="flex gap-2">
+            <button class="ctrl-btn active" data-scale="1">1×</button>
+            <button class="ctrl-btn" data-scale="2">2×</button>
+            <button class="ctrl-btn" data-scale="3">3×</button>
+            <button class="ctrl-btn" data-scale="4">4×</button>
+            <button class="ctrl-btn" data-scale="6">6×</button>
+          </div>
+
+          <div class="flex gap-2 ml-auto">
+            <button id="dlPng" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#5ed29c] text-[#070b0a] text-xs font-bold uppercase tracking-wider hover:brightness-110 active:scale-[0.97] transition-all">
+              ↓ PNG
+            </button>
+            <button id="dlSvg" class="ctrl-btn">↓ SVG</button>
+            <button id="dlTxt" class="ctrl-btn">↓ TXT</button>
+          </div>
+
+        </div></div>
+
+        <!-- Privacy note -->
+        <p class="text-xs text-center" style="color:rgba(255,255,255,0.15);">
+          🔒 Everything runs in your browser — no images uploaded, no data stored.
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer class="py-12 px-6 md:px-12 lg:px-16" style="border-top:1px solid rgba(255,255,255,0.06);">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+      <a href="/" class="font-inter font-semibold text-xl text-white tracking-tight">Waysider<span style="color:#5ed29c;">.</span></a>
+      <p class="text-xs" style="color:rgba(255,255,255,0.2);">© 2025 Waysider Studio · All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- hidden processing canvas -->
+  <canvas id="srcCanvas" style="display:none;"></canvas>
+
+  <script>
+    // ── RAMPS ────────────────────────────────────────────────────────
+    const RAMPS = {
+      standard: ' .:-=+*#%@',
+      blocks:   ' ░▒▓█',
+      detailed: ' `.-\':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@',
+      minimal:  ' .:█'
+    };
+
+    // ── STATE ────────────────────────────────────────────────────────
+    const S = {
+      ramp:'standard', width:120, hscale:0.5, density:1.0, pixelate:0,
+      brightness:0, contrast:0, gamma:1.0,
+      mode:'mono', bg:'transparent', bgColor:'#070b0a', fgColor:'#5ed29c',
+      blend:'source-over', fontSize:8, scale:1,
+      image:null, rows:[]
+    };
+
+    // ── ELEMENTS ─────────────────────────────────────────────────────
+    const dropZone    = document.getElementById('dropZone');
+    const fileInput   = document.getElementById('fileInput');
+    const srcCanvas   = document.getElementById('srcCanvas');
+    const asciiCanvas = document.getElementById('asciiCanvas');
+    const emptyState  = document.getElementById('emptyState');
+    const workspace   = document.getElementById('workspace');
+    const ctx         = asciiCanvas.getContext('2d');
+    const srcCtx      = srcCanvas.getContext('2d', { willReadFrequently:true });
+
+    // ── UPLOAD ───────────────────────────────────────────────────────
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor='rgba(94,210,156,0.5)'; dropZone.style.background='rgba(94,210,156,0.04)'; });
+    dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor='rgba(255,255,255,0.1)'; dropZone.style.background='rgba(255,255,255,0.01)'; });
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.style.borderColor='rgba(255,255,255,0.1)'; dropZone.style.background='rgba(255,255,255,0.01)';
+      if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', () => { if (fileInput.files[0]) loadFile(fileInput.files[0]); });
+
+    function loadFile(file) {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => { S.image = img; URL.revokeObjectURL(url); workspace.style.display = ''; render(); };
+      img.src = url;
+    }
+
+    // ── SLIDERS ──────────────────────────────────────────────────────
+    function bindSlider(sliderId, valId, key, transform, format) {
+      const sl = document.getElementById(sliderId);
+      const vl = document.getElementById(valId);
+      sl.addEventListener('input', () => {
+        S[key] = transform(parseFloat(sl.value));
+        vl.textContent = format ? format(S[key]) : S[key];
+        render();
+      });
+    }
+    const int  = v => Math.round(v);
+    const f2   = v => v.toFixed(2);
+
+    bindSlider('widthSlider',    'widthVal',    'width',      v => Math.round(v),   null);
+    bindSlider('hscaleSlider',   'hscaleVal',   'hscale',     v => v/100,           f2);
+    bindSlider('densitySlider',  'densityVal',  'density',    v => v/100,           f2);
+    bindSlider('pixelateSlider', 'pixelateVal', 'pixelate',   v => Math.round(v),   null);
+    bindSlider('brightnessSlider','brightnessVal','brightness',v => Math.round(v),  null);
+    bindSlider('contrastSlider', 'contrastVal', 'contrast',   v => Math.round(v),   null);
+    bindSlider('gammaSlider',    'gammaVal',    'gamma',       v => v/100,          f2);
+
+    document.getElementById('fontSize').addEventListener('input', function() {
+      S.fontSize = Math.max(4, Math.min(24, parseInt(this.value)||8)); render();
+    });
+    document.getElementById('blendMode').addEventListener('change', function() { S.blend = this.value; render(); });
+    document.getElementById('bgColor').addEventListener('input', function() { S.bgColor = this.value; render(); });
+    document.getElementById('fgColor').addEventListener('input', function() { S.fgColor = this.value; render(); });
+
+    // ── BUTTON GROUPS ────────────────────────────────────────────────
+    function bindGroup(selector, key, extra) {
+      document.querySelectorAll(selector).forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll(selector).forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          S[key] = btn.dataset[key];
+          if (extra) extra(S[key]);
+          render();
+        });
+      });
+    }
+    bindGroup('[data-ramp]',  'ramp');
+    bindGroup('[data-mode]',  'mode');
+    bindGroup('[data-bg]',    'bg', v => {
+      document.getElementById('bgColorRow').style.display = v === 'solid' ? 'flex' : 'none';
+    });
+    bindGroup('[data-scale]', 'scale', v => { S.scale = parseInt(v); drawAscii(); return; });
+
+    // ── CONVERSION ───────────────────────────────────────────────────
+    function toAscii(img) {
+      const cols   = S.width;
+      const aspect = 0.5;
+      let pw = img.naturalWidth, ph = img.naturalHeight;
+
+      if (S.pixelate > 0) {
+        const f = 1/(S.pixelate+1);
+        pw = Math.max(1, Math.round(pw*f));
+        ph = Math.max(1, Math.round(ph*f));
+      }
+
+      srcCanvas.width = pw; srcCanvas.height = ph;
+      srcCtx.drawImage(img, 0, 0, pw, ph);
+
+      const cellW   = pw / cols;
+      const cellH   = cellW / aspect * S.hscale;
+      const rows    = Math.max(1, Math.round(ph / cellH));
+      const ramp    = RAMPS[S.ramp];
+      const rampMax = ramp.length - 1;
+      const result  = [];
+
+      for (let r = 0; r < rows; r++) {
+        const row = [];
+        for (let c = 0; c < cols; c++) {
+          const px = Math.floor(c * cellW);
+          const py = Math.floor(r * cellH);
+          const cw = Math.max(1, Math.floor(cellW));
+          const ch = Math.max(1, Math.floor(cellH));
+          const d  = srcCtx.getImageData(px, py, cw, ch).data;
+
+          let sr=0, sg=0, sb=0, n=0;
+          for (let i=0; i<d.length; i+=4) { sr+=d[i]; sg+=d[i+1]; sb+=d[i+2]; n++; }
+          const R=sr/n, G=sg/n, B=sb/n;
+
+          let lum = 0.299*R + 0.587*G + 0.114*B;
+          lum = clamp(brighten(lum, S.brightness), 0, 255);
+          lum = clamp(contrast(lum, S.contrast),   0, 255);
+          lum = clamp(gamma(lum, S.gamma),          0, 255);
+
+          let idx = Math.round((lum/255) * rampMax * S.density);
+          idx = clamp(idx, 0, rampMax);
+          row.push({ ch: ramp[idx], r:Math.round(R), g:Math.round(G), b:Math.round(B) });
+        }
+        result.push(row);
+      }
+      return result;
+    }
+
+    const clamp    = (v,a,b) => Math.max(a, Math.min(b, v));
+    const brighten = (v,b)   => v + b*2.55;
+    const contrast = (v,c)   => { const f=(259*(c+255))/(255*(259-c)); return f*(v-128)+128; };
+    const gamma    = (v,g)   => 255 * Math.pow(v/255, 1/g);
+
+    // ── DRAW ─────────────────────────────────────────────────────────
+    function drawAscii() {
+      if (!S.rows.length) return;
+      const rows  = S.rows;
+      const cols  = rows[0].length;
+      const fs    = S.fontSize * S.scale;
+      const charW = fs * 0.6;
+      const charH = fs;
+
+      asciiCanvas.width  = Math.round(cols * charW);
+      asciiCanvas.height = Math.round(rows.length * charH);
+
+      ctx.globalCompositeOperation = 'source-over';
+      if (S.bg === 'solid') { ctx.fillStyle = S.bgColor; ctx.fillRect(0, 0, asciiCanvas.width, asciiCanvas.height); }
+      else ctx.clearRect(0, 0, asciiCanvas.width, asciiCanvas.height);
+
+      ctx.globalCompositeOperation = S.blend;
+      ctx.font = `${fs}px monospace`;
+      ctx.textBaseline = 'top';
+
+      for (let r=0; r<rows.length; r++) {
+        for (let c=0; c<cols; c++) {
+          const cell = rows[r][c];
+          if (!cell.ch.trim()) continue;
+
+          if (S.mode === 'mono')     ctx.fillStyle = S.fgColor;
+          else if (S.mode === 'multi') ctx.fillStyle = `hsl(${(c/cols*360+r/rows.length*120)%360},70%,60%)`;
+          else                         ctx.fillStyle = `rgb(${cell.r},${cell.g},${cell.b})`;
+
+          ctx.fillText(cell.ch, c*charW, r*charH);
+        }
+      }
+
+      asciiCanvas.style.display = 'block';
+      emptyState.style.display  = 'none';
+    }
+
+    // ── RENDER (debounced) ───────────────────────────────────────────
+    let _t = null;
+    function render() {
+      if (!S.image) return;
+      clearTimeout(_t);
+      _t = setTimeout(() => { S.rows = toAscii(S.image); drawAscii(); }, 60);
+    }
+
+    // ── EXPORTS ──────────────────────────────────────────────────────
+    document.getElementById('dlPng').addEventListener('click', () => {
+      if (!S.rows.length) return;
+      const a = document.createElement('a');
+      a.download = 'ascii-art.png';
+      a.href = asciiCanvas.toDataURL('image/png');
+      a.click();
+    });
+
+    document.getElementById('dlTxt').addEventListener('click', () => {
+      if (!S.rows.length) return;
+      const txt  = S.rows.map(r => r.map(c => c.ch).join('')).join('\n');
+      const blob = new Blob([txt], {type:'text/plain'});
+      const a    = document.createElement('a');
+      a.download = 'ascii-art.txt';
+      a.href     = URL.createObjectURL(blob);
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    document.getElementById('dlSvg').addEventListener('click', () => {
+      if (!S.rows.length) return;
+      const rows  = S.rows, cols = rows[0].length;
+      const fs    = S.fontSize * S.scale;
+      const charW = fs * 0.6, charH = fs;
+      const W     = cols*charW, H = rows.length*charH;
+
+      let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">`;
+      if (S.bg==='solid') svg += `<rect width="${W}" height="${H}" fill="${S.bgColor}"/>`;
+      svg += `<text font-family="monospace" font-size="${fs}" xml:space="preserve">`;
+
+      for (let r=0; r<rows.length; r++) {
+        svg += `<tspan x="0" dy="${r===0?0:charH}">`;
+        for (let c=0; c<cols; c++) {
+          const cell = rows[r][c];
+          const color = S.mode==='mono' ? S.fgColor
+            : S.mode==='multi' ? `hsl(${(c/cols*360+r/rows.length*120)%360},70%,60%)`
+            : `rgb(${cell.r},${cell.g},${cell.b})`;
+          const ch = cell.ch.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+          svg += `<tspan fill="${color}">${ch}</tspan>`;
+        }
+        svg += `</tspan>`;
+      }
+      svg += `</text></svg>`;
+
+      const blob = new Blob([svg], {type:'image/svg+xml'});
+      const a    = document.createElement('a');
+      a.download = 'ascii-art.svg';
+      a.href     = URL.createObjectURL(blob);
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // ── NAVBAR SCROLL ────────────────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive:true });
+
+    // ── GSAP ENTRANCE ────────────────────────────────────────────────
+    gsap.from('#navbar', { y:-50, opacity:0, duration:0.7, ease:'power3.out' });
+  </script>
+
+</body>
+</html>
