@@ -1,7 +1,7 @@
 {
   "name": "Hytale Map",
   "image": "assets/map/world.webp",
-  "width": 2580,
-  "height": 1550,
-  "coverage": 0.332
+  "width": 1858,
+  "height": 1680,
+  "coverage": 0.426
 }
